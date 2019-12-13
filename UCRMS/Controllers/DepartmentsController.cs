@@ -7,14 +7,13 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using UCRMS.DAL;
 using UCRMS.Models;
 
 namespace UCRMS.Controllers
 {
     public class DepartmentsController : Controller
     {
-        private UCRMSDBContext db = new UCRMSDBContext();
+        private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Departments
         public async Task<ActionResult> Index()
@@ -37,6 +36,16 @@ namespace UCRMS.Controllers
             return View(department);
         }
 
+        public JsonResult IsCodeExist(string Code)
+        {
+            return Json(!db.Departments.Any(x => x.Code.ToUpper() == Code.ToUpper()), JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult IsNameExist(string Name)
+        {
+            return Json(!db.Departments.Any(x => x.Name.Trim().ToUpper() == Name.Trim().ToUpper()), JsonRequestBehavior.AllowGet);
+        }
+
         // GET: Departments/Create
         public ActionResult Create()
         {
@@ -48,7 +57,7 @@ namespace UCRMS.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "DepartmentId,Code,Name")] Department department)
+        public async Task<ActionResult> Create([Bind(Include = "Id,Code,Name")] Department department)
         {
             if (ModelState.IsValid)
             {
@@ -80,7 +89,7 @@ namespace UCRMS.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "DepartmentId,Code,Name")] Department department)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,Code,Name")] Department department)
         {
             if (ModelState.IsValid)
             {

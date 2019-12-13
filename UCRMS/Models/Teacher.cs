@@ -11,28 +11,29 @@ namespace UCRMS.Models
     {
         public int Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="Please Input Teacher Name")]
         public string Name { get; set; }
 
+        [DataType(DataType.MultilineText)]
         public string Address { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Please Input Email")]
         [EmailAddress]
         public string Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Please Input Contact")]
         [Phone]
         public string Contact { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Please Select Designation")]
         [Display(Name = "Designation")]
         public int DesignationId { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Please Select Department")]
         [Display(Name = "Department")]
         public int DepartmentId { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Please Input Credit to be taken")]
         [Range(0, double.MaxValue, ErrorMessage = "Credit to be taken must be non-negative value")]
         [Display(Name ="Credit to be taken")]
         public double Credittobetaken { get; set; }

@@ -26,17 +26,17 @@ namespace UCRMS.Models.ViewModels
         public double RemainingCredit { get; set; }
 
         [Required]
-        [Display(Name = "Course")]
+        [Display(Name = "Course Code")]
         public int CourseId { get; set; }
 
         public string Name { get; set; }
 
         public double Credit { get; set; }
 
-        public Department Department { get; set; }
+        public virtual Department Department { get; set; }
 
-        public Teacher Teacher { get; set; }
+        public virtual Teacher Teacher { get; set; }
 
-        public Course Course { get; set; }
+        public virtual Course Course { get; set; }
     }
 }

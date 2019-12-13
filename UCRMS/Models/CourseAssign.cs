@@ -11,16 +11,16 @@ namespace UCRMS.Models
     {
         public int Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Please Select Department")]
         [Display(Name = "Department")]
         public int DepartmentId { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Please Select Teacher")]
         [Display(Name = "Teacher")]
         public int TeacherId { get; set; }
 
-        [Required]
-        [Display(Name = "Course")]
+        [Required(ErrorMessage = "Please Select Course")]
+        [Display(Name = "Course Code")]
         public int CourseId { get; set; }
 
         public virtual Department Department { get; set; }

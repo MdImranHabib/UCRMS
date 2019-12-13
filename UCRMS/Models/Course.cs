@@ -12,26 +12,27 @@ namespace UCRMS.Models
     {
         public int Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Please Input Course Code")]
         [MinLength(5,ErrorMessage = "Code must be at least 5 characters")]
         [Remote("IsCodeExist", "Courses", ErrorMessage = "Course code is already exist")]
         public string Code { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Please Input Course Name")]
         [Remote("IsNameExist", "Courses", ErrorMessage = "Course Name is already exist")]
         public string Name { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Please Input Course Credit")]
         [Range(0.5, 5.0, ErrorMessage="Credit can not be less than 0.5 and more than 5.0")]
         public double Credit { get; set; }
 
+        [DataType(DataType.MultilineText)]
         public string Description { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Please Select Department")]
         [Display(Name = "Department")]
         public int DepartmentId { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Please Select Semester")]
         [Display(Name = "Semester")]
         public int SemesterId { get; set; }
 
