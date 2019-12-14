@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace UCRMS.Models
 {
@@ -19,10 +20,12 @@ namespace UCRMS.Models
 
         [Required(ErrorMessage = "Please Input Email")]
         [EmailAddress]
+        [Remote("IsEmailExist", "Teachers", ErrorMessage ="This email is already in use. Please try another.")]
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Please Input Contact")]
         [Phone]
+        [Display(Name ="Contact No.")]
         public string Contact { get; set; }
 
         [Required(ErrorMessage = "Please Select Designation")]
