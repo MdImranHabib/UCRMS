@@ -12,118 +12,127 @@ using Vereyon.Web;
 
 namespace UCRMS.Controllers
 {
-    public class DepartmentsController : Controller
+    public class CoursesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: Departments
+        // GET: Courses
         public async Task<ActionResult> Index()
         {
-            return View(await db.Departments.ToListAsync());
+            var courses = db.Courses.Include(c => c.Department).Include(c => c.Semester);
+            return View(await courses.ToListAsync());
         }
 
-        // GET: Departments/Details/5
+        // GET: Courses/Details/5
         public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Department department = await db.Departments.FindAsync(id);
-            if (department == null)
+            Course course = await db.Courses.FindAsync(id);
+            if (course == null)
             {
                 return HttpNotFound();
             }
-            return View(department);
+            return View(course);
         }
 
         public JsonResult IsCodeExist(string Code)
         {
-            return Json(!db.Departments.Any(x => x.Code.ToUpper() == Code.ToUpper()), JsonRequestBehavior.AllowGet);
+            return Json(!db.Courses.Any(x => x.Code.Trim().ToUpper() == Code.Trim().ToUpper()), JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult IsNameExist(string Name)
         {
-            return Json(!db.Departments.Any(x => x.Name.Trim().ToUpper() == Name.Trim().ToUpper()), JsonRequestBehavior.AllowGet);
+            return Json(!db.Courses.Any(x => x.Name.Trim().ToUpper() == Name.Trim().ToUpper()), JsonRequestBehavior.AllowGet);
         }
 
-        // GET: Departments/Create
+        // GET: Courses/Create
         public ActionResult Create()
         {
+            ViewBag.DepartmentId = new SelectList(db.Departments, "Id", "Code");
+            ViewBag.SemesterId = new SelectList(db.Semesters, "Id", "Name");
             return View();
         }
 
-        // POST: Departments/Create
+        // POST: Courses/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Code,Name")] Department department)
+        public async Task<ActionResult> Create([Bind(Include = "Id,Code,Name,Credit,Description,DepartmentId,SemesterId")] Course course)
         {
             if (ModelState.IsValid)
             {
-                db.Departments.Add(department);
+                db.Courses.Add(course);
                 await db.SaveChangesAsync();
-                FlashMessage.Confirmation("Department Saved Successfully!");
+                FlashMessage.Confirmation("Course saved Successfully!");
                 //return RedirectToAction("Index");
             }
 
-            return View(department);
+            ViewBag.DepartmentId = new SelectList(db.Departments, "Id", "Code", course.DepartmentId);
+            ViewBag.SemesterId = new SelectList(db.Semesters, "Id", "Name", course.SemesterId);
+            return View(course);
         }
 
-        // GET: Departments/Edit/5
+        // GET: Courses/Edit/5
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Department department = await db.Departments.FindAsync(id);
-            if (department == null)
+            Course course = await db.Courses.FindAsync(id);
+            if (course == null)
             {
                 return HttpNotFound();
             }
-            return View(department);
+            ViewBag.DepartmentId = new SelectList(db.Departments, "Id", "Code", course.DepartmentId);
+            ViewBag.SemesterId = new SelectList(db.Semesters, "Id", "Name", course.SemesterId);
+            return View(course);
         }
 
-        // POST: Departments/Edit/5
+        // POST: Courses/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,Code,Name")] Department department)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,Code,Name,Credit,Description,DepartmentId,SemesterId")] Course course)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(department).State = EntityState.Modified;
+                db.Entry(course).State = EntityState.Modified;
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            return View(department);
+            ViewBag.DepartmentId = new SelectList(db.Departments, "Id", "Code", course.DepartmentId);
+            ViewBag.SemesterId = new SelectList(db.Semesters, "Id", "Name", course.SemesterId);
+            return View(course);
         }
 
-        // GET: Departments/Delete/5
+        // GET: Courses/Delete/5
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Department department = await db.Departments.FindAsync(id);
-            if (department == null)
+            Course course = await db.Courses.FindAsync(id);
+            if (course == null)
             {
                 return HttpNotFound();
             }
-            return View(department);
+            return View(course);
         }
 
-        // POST: Departments/Delete/5
+        // POST: Courses/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            Department department = await db.Departments.FindAsync(id);
-            db.Departments.Remove(department);
+            Course course = await db.Courses.FindAsync(id);
+            db.Courses.Remove(course);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
