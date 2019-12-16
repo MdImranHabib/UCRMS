@@ -40,6 +40,6 @@ namespace UCRMS.Models
 
         public virtual Semester Semester { get; set; }
 
-
+        //public virtual CourseAssign CourseAssign { get; set; }
     }
 }

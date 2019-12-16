@@ -23,8 +23,6 @@ namespace UCRMS.Models
 
         public virtual ICollection<Course> Courses { get; set; }
 
-        //public virtual ICollection<CourseAssign> CourseAssigns { get; set; }
-
         public virtual ICollection<Teacher> Teachers { get; set; }
     }
 }

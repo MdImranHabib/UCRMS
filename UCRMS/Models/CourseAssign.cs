@@ -23,6 +23,9 @@ namespace UCRMS.Models
         [Display(Name = "Course Code")]
         public int CourseId { get; set; }
 
+        [Required]
+        public bool IsAssigned { get; set; }
+
         public virtual Department Department { get; set; }
 
         public virtual Teacher Teacher { get; set; }

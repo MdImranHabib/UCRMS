@@ -36,5 +36,6 @@ namespace UCRMS.Models
         public DbSet<Designation> Designations { get; set; }
         public DbSet<Semester> Semesters { get; set; }
         public DbSet<Teacher> Teachers { get; set; }
+        public DbSet<Student> Students { get; set; }
     }
 }
