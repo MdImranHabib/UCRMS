@@ -11,10 +11,6 @@ namespace UCRMS.Models
     {
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Please Select Department")]
-        [Display(Name = "Department")]
-        public int DepartmentId { get; set; }
-
         [Required(ErrorMessage = "Please Select Teacher")]
         [Display(Name = "Teacher")]
         public int TeacherId { get; set; }
@@ -22,11 +18,6 @@ namespace UCRMS.Models
         [Required(ErrorMessage = "Please Select Course")]
         [Display(Name = "Course Code")]
         public int CourseId { get; set; }
-
-        [Required]
-        public bool IsAssigned { get; set; }
-
-        public virtual Department Department { get; set; }
 
         public virtual Teacher Teacher { get; set; }
 

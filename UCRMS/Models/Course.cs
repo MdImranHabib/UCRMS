@@ -28,6 +28,10 @@ namespace UCRMS.Models
         [DataType(DataType.MultilineText)]
         public string Description { get; set; }
 
+        public string AssignTo { get; set; }
+
+        public bool Status { get; set; }
+
         [Required(ErrorMessage = "Please Select Department")]
         [Display(Name = "Department")]
         public int DepartmentId { get; set; }

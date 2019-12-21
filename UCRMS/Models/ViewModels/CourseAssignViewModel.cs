@@ -29,9 +29,11 @@ namespace UCRMS.Models.ViewModels
         [Display(Name = "Course Code")]
         public int CourseId { get; set; }
 
-        public string Name { get; set; }
+        [Display(Name ="Name")]
+        public string CourseName { get; set; }
 
-        public double Credit { get; set; }
+        [Display(Name ="Credit")]
+        public double CourseCredit { get; set; }
 
         public virtual Department Department { get; set; }
 

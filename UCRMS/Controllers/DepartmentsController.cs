@@ -23,19 +23,19 @@ namespace UCRMS.Controllers
         }
 
         // GET: Departments/Details/5
-        public async Task<ActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Department department = await db.Departments.FindAsync(id);
-            if (department == null)
-            {
-                return HttpNotFound();
-            }
-            return View(department);
-        }
+        //public async Task<ActionResult> Details(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    Department department = await db.Departments.FindAsync(id);
+        //    if (department == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(department);
+        //}
 
         public JsonResult IsCodeExist(string Code)
         {
@@ -64,69 +64,69 @@ namespace UCRMS.Controllers
             {
                 db.Departments.Add(department);
                 await db.SaveChangesAsync();
-                FlashMessage.Confirmation("Department Saved Successfully!");
-                //return RedirectToAction("Index");
+                FlashMessage.Confirmation(department.Name + " Department Saved Successfully!");
+                return RedirectToAction("Create");
             }
 
             return View(department);
         }
 
         // GET: Departments/Edit/5
-        public async Task<ActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Department department = await db.Departments.FindAsync(id);
-            if (department == null)
-            {
-                return HttpNotFound();
-            }
-            return View(department);
-        }
+        //public async Task<ActionResult> Edit(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    Department department = await db.Departments.FindAsync(id);
+        //    if (department == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(department);
+        //}
 
         // POST: Departments/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,Code,Name")] Department department)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(department).State = EntityState.Modified;
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
-            }
-            return View(department);
-        }
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<ActionResult> Edit([Bind(Include = "Id,Code,Name")] Department department)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        db.Entry(department).State = EntityState.Modified;
+        //        await db.SaveChangesAsync();
+        //        return RedirectToAction("Index");
+        //    }
+        //    return View(department);
+        //}
 
         // GET: Departments/Delete/5
-        public async Task<ActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Department department = await db.Departments.FindAsync(id);
-            if (department == null)
-            {
-                return HttpNotFound();
-            }
-            return View(department);
-        }
+        //public async Task<ActionResult> Delete(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    Department department = await db.Departments.FindAsync(id);
+        //    if (department == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(department);
+        //}
 
         // POST: Departments/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(int id)
-        {
-            Department department = await db.Departments.FindAsync(id);
-            db.Departments.Remove(department);
-            await db.SaveChangesAsync();
-            return RedirectToAction("Index");
-        }
+        //[HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
+        //public async Task<ActionResult> DeleteConfirmed(int id)
+        //{
+        //    Department department = await db.Departments.FindAsync(id);
+        //    db.Departments.Remove(department);
+        //    await db.SaveChangesAsync();
+        //    return RedirectToAction("Index");
+        //}
 
         protected override void Dispose(bool disposing)
         {

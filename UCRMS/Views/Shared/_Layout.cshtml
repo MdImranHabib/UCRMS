@@ -20,9 +20,15 @@
                     @Html.ActionLink("UCRMS", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
                 </div>
                 <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
+                    <ul class="nav navbar-nav menu">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Departments", "Index", "Departments")</li>
+                    <li>
+                        @Html.ActionLink("Departments", "Index", "Departments")
+                        <ul>
+                            <li>@Html.ActionLink("Save Department", "Create", "Departments")</li>
+                            <li>@Html.ActionLink("View All Departments", "Index", "Departments")</li>
+                        </ul>
+                    </li>
                     <li>@Html.ActionLink("Save Course", "Create", "Courses")</li>
                     <li>@Html.ActionLink("Save Teacher", "Create", "Teachers")</li>
                 </ul>
@@ -36,7 +42,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&copy; @DateTime.Now.Year - UCRMS. Developed By The Anonymous</p>
         </footer>
     </div>
 
