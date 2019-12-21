@@ -18,25 +18,62 @@ namespace UCRMS.Migrations
 
         protected override void Seed(UCRMS.Models.ApplicationDbContext context)
         {
-            db.Semesters.AddOrUpdate(x => x.Id,
-                new Semester() { Id = 1, Name = "First Semester"},
-                new Semester() { Id = 2, Name = "Second Semester"},
-                new Semester() { Id = 3, Name = "Third Semester"},
-                new Semester() { Id = 4, Name = "Fourth Semester"},
-                new Semester() { Id = 5, Name = "Fifth Semester"},
-                new Semester() { Id = 6, Name = "Sixth Semester"},
-                new Semester() { Id = 7, Name = "Seventh Semester"},
-                new Semester() { Id = 8, Name = "Eighth Semester"}
-                );
+            //context.Semesters.AddOrUpdate(x => x.Id,
+            //    new Semester() { Name = "First Semester"},
+            //    new Semester() { Name = "Second Semester"},
+            //    new Semester() { Name = "Third Semester"},
+            //    new Semester() { Name = "Fourth Semester"},
+            //    new Semester() { Name = "Fifth Semester"},
+            //    new Semester() { Name = "Sixth Semester"},
+            //    new Semester() { Name = "Seventh Semester"},
+            //    new Semester() { Name = "Eighth Semester"}
+            //    );
 
-            db.Designations.AddOrUpdate(x => x.Id,
-                new Designation() { Id = 1, Name = "Professor"},
-                new Designation() { Id = 2, Name = "Associate Professor"},
-                new Designation() { Id = 3, Name = "Assistant Professor"},
-                new Designation() { Id = 4, Name = "Senior Lecturer"},
-                new Designation() { Id = 5, Name = "Lecturer" }
-                );
+            //context.Designations.AddOrUpdate(
+            //    new Designation() { Name = "Professor"},
+            //    new Designation() { Name = "Associate Professor"},
+            //    new Designation() { Name = "Assistant Professor"},
+            //    new Designation() { Name = "Senior Lecturer"},
+            //    new Designation() { Name = "Lecturer" }
+            //    );
 
+            //context.Grades.AddOrUpdate(x => x.Id,
+            //  new Grade() { Name = "A+" },
+            //  new Grade() { Name = "A" },
+            //  new Grade() { Name = "A-" },
+            //  new Grade() { Name = "B+" },
+            //  new Grade() { Name = "B" },
+            //  new Grade() { Name = "B-" },
+            //  new Grade() { Name = "C+" },
+            //  new Grade() { Name = "C" },
+            //  new Grade() { Name = "C-" },
+            //  new Grade() { Name = "D+" },
+            //  new Grade() { Name = "D" },
+            //  new Grade() { Name = "D-" },
+            //  new Grade() { Name = "F" }
+            //  );
+
+            //context.Days.AddOrUpdate(
+            //    new Day() { Name = "Saturday" },
+            //    new Day() { Name = "Sunday" },
+            //    new Day() { Name = "Monday" },
+            //    new Day() { Name = "Tuesday" },
+            //    new Day() { Name = "Wednesday" },
+            //    new Day() { Name = "Thursday" }
+            //    );
+
+            //context.Rooms.AddOrUpdate(
+            //    new Room() { Number = "101" },
+            //    new Room() { Number = "102" },
+            //    new Room() { Number = "103" },
+            //    new Room() { Number = "201" },
+            //    new Room() { Number = "202" },
+            //    new Room() { Number = "203" },
+            //    new Room() { Number = "301" },
+            //    new Room() { Number = "302" },
+            //    new Room() { Number = "303" },
+            //    new Room() { Number = "304" }
+            //    );
         }
     }
 }

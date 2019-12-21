@@ -16,7 +16,6 @@ namespace UCRMS.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: Teachers
         public async Task<ActionResult> Index()
         {
             var teachers = db.Teachers.Include(t => t.Department).Include(t => t.Designation);
@@ -24,26 +23,25 @@ namespace UCRMS.Controllers
         }
 
         // GET: Teachers/Details/5
-        public async Task<ActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Teacher teacher = await db.Teachers.FindAsync(id);
-            if (teacher == null)
-            {
-                return HttpNotFound();
-            }
-            return View(teacher);
-        }
+        //public async Task<ActionResult> Details(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    Teacher teacher = await db.Teachers.FindAsync(id);
+        //    if (teacher == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(teacher);
+        //}
 
         public JsonResult IsEmailExist(string Email)
         {
             return Json(!db.Teachers.Any(x => x.Email.ToUpper() == Email.ToUpper()), JsonRequestBehavior.AllowGet);
         }
 
-        // GET: Teachers/Create
         public ActionResult Create()
         {
             ViewBag.DepartmentId = new SelectList(db.Departments, "Id", "Code");
@@ -51,19 +49,17 @@ namespace UCRMS.Controllers
             return View();
         }
 
-        // POST: Teachers/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Name,Address,Email,Contact,DesignationId,DepartmentId,Credittobetaken")] Teacher teacher)
+        public async Task<ActionResult> Create([Bind(Include = "Id,Name,Address,Email,Contact,DesignationId,DepartmentId,Credittobetaken,RemainingCredit")] Teacher teacher)
         {
             if (ModelState.IsValid)
             {
+                teacher.RemainingCredit = teacher.Credittobetaken;
                 db.Teachers.Add(teacher);
                 await db.SaveChangesAsync();
-                FlashMessage.Confirmation("Teacher Saved Successfully!");
-                //return RedirectToAction("Index");
+                FlashMessage.Confirmation("Teacher Named " + teacher.Name + " Saved Successfully!");
+                return RedirectToAction("Create");
             }
 
             ViewBag.DepartmentId = new SelectList(db.Departments, "Id", "Code", teacher.DepartmentId);

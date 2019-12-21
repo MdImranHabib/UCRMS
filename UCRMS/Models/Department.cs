@@ -21,10 +21,8 @@ namespace UCRMS.Models
         [Remote("IsNameExist", "Departments", ErrorMessage = "Department Name is already exist")]
         public string Name { get; set; }
 
-        public virtual ICollection<Course> Courses { get; set; }
+        //public virtual ICollection<Course> Courses { get; set; }
 
-        //public virtual ICollection<CourseAssign> CourseAssigns { get; set; }
-
-        public virtual ICollection<Teacher> Teachers { get; set; }
+        //public virtual ICollection<Teacher> Teachers { get; set; }
     }
 }

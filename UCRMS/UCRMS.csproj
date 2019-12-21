@@ -171,6 +171,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CourseAssignsController.cs" />
     <Compile Include="Controllers\CoursesController.cs" />
     <Compile Include="Controllers\DepartmentsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -187,15 +188,35 @@
     <Compile Include="Migrations\201912131616112_imran-01.Designer.cs">
       <DependentUpon>201912131616112_imran-01.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201912160603220_imran-02.cs" />
+    <Compile Include="Migrations\201912160603220_imran-02.Designer.cs">
+      <DependentUpon>201912160603220_imran-02.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912160605450_imran-03.cs" />
+    <Compile Include="Migrations\201912160605450_imran-03.Designer.cs">
+      <DependentUpon>201912160605450_imran-03.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912212123158_imran-04.cs" />
+    <Compile Include="Migrations\201912212123158_imran-04.Designer.cs">
+      <DependentUpon>201912212123158_imran-04.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912212131489_imran-05.cs" />
+    <Compile Include="Migrations\201912212131489_imran-05.Designer.cs">
+      <DependentUpon>201912212131489_imran-05.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Course.cs" />
     <Compile Include="Models\CourseAssign.cs" />
+    <Compile Include="Models\Day.cs" />
     <Compile Include="Models\Department.cs" />
     <Compile Include="Models\Designation.cs" />
+    <Compile Include="Models\Grade.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Room.cs" />
     <Compile Include="Models\Semester.cs" />
+    <Compile Include="Models\Student.cs" />
     <Compile Include="Models\Teacher.cs" />
     <Compile Include="Models\ViewModels\CourseAssignViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -272,6 +293,11 @@
     <Content Include="Views\Teachers\Details.cshtml" />
     <Content Include="Views\Teachers\Edit.cshtml" />
     <Content Include="Views\Teachers\Index.cshtml" />
+    <Content Include="Views\CourseAssigns\Create.cshtml" />
+    <Content Include="Views\CourseAssigns\Delete.cshtml" />
+    <Content Include="Views\CourseAssigns\Details.cshtml" />
+    <Content Include="Views\CourseAssigns\Edit.cshtml" />
+    <Content Include="Views\CourseAssigns\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -295,6 +321,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912131616112_imran-01.resx">
       <DependentUpon>201912131616112_imran-01.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912160603220_imran-02.resx">
+      <DependentUpon>201912160603220_imran-02.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912160605450_imran-03.resx">
+      <DependentUpon>201912160605450_imran-03.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912212123158_imran-04.resx">
+      <DependentUpon>201912212123158_imran-04.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912212131489_imran-05.resx">
+      <DependentUpon>201912212131489_imran-05.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

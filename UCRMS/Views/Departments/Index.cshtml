@@ -7,40 +7,30 @@
 
 <h2 class="text-center">All Departments</h2>
 <hr />
-<p>
-   @Html.ActionLink("Create New", "Create")
-</p>
-<hr />
-<table class="table table-bordered text-center">
-    <thead>
-        <tr class="bg-primary">
-            <th class="text-center">
-                @Html.DisplayNameFor(model => model.Code)
-            </th>
-            <th class="text-center">
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            @*<th></th>*@
-        </tr>
-    </thead>
-
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Code)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                @*<td>
-                    @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-                    @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-                    @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-                </td>*@
+<div class="well">
+    <table class="table table-bordered text-center">
+        <thead>
+            <tr class="bg-primary">
+                <th class="text-center">
+                    @Html.DisplayNameFor(model => model.Code)
+                </th>
+                <th class="text-center">
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
             </tr>
-        }
-    </tbody>
-
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr class="bg-info">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Code)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
