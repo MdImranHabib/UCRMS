@@ -11,11 +11,11 @@ namespace UCRMS.Models.ViewModels
     {
         public int Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Please Select a Department")]
         [Display(Name = "Department")]
         public int DepartmentId { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="Please Select a Teacher")]
         [Display(Name = "Teacher")]
         public int TeacherId { get; set; }
 
@@ -25,7 +25,7 @@ namespace UCRMS.Models.ViewModels
         [Display(Name = "Remaining Credit")]
         public double RemainingCredit { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Please Select a Course")]
         [Display(Name = "Course Code")]
         public int CourseId { get; set; }
 
@@ -37,8 +37,8 @@ namespace UCRMS.Models.ViewModels
 
         public virtual Department Department { get; set; }
 
-        public virtual Teacher Teacher { get; set; }
+        //public virtual Teacher Teacher { get; set; }
 
-        public virtual Course Course { get; set; }
+        //public virtual Course Course { get; set; }
     }
 }
