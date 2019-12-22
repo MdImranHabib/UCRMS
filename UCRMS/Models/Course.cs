@@ -28,6 +28,7 @@ namespace UCRMS.Models
         [DataType(DataType.MultilineText)]
         public string Description { get; set; }
 
+        [Display(Name="Assigned To")]
         public string AssignTo { get; set; }
 
         public bool Status { get; set; }

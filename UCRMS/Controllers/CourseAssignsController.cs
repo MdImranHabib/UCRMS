@@ -39,15 +39,15 @@ namespace UCRMS.Controllers
         //    return View(courseAssign);
         //}
 
-        public JsonResult GetTeachersByDeptId(int id)
+        public JsonResult GetTeachersByDeptId(int deptId)
         {
-            var teachers = db.Teachers.Where(x => x.DepartmentId == id).ToList();
-            return Json(teachers,JsonRequestBehavior.AllowGet);
+            var teachers = db.Teachers.Where(x => x.DepartmentId == deptId).ToList();
+            return Json(teachers);
         }
 
-        public JsonResult GetCoursesByDeptId(int id)
+        public JsonResult GetCoursesByDeptId(int deptId)
         {
-            var courses = db.Courses.Where(x => x.DepartmentId == id).ToList();
+            var courses = db.Courses.Where(x => x.DepartmentId == deptId).ToList();
             return Json(courses);
         }
 
@@ -65,8 +65,8 @@ namespace UCRMS.Controllers
 
         public ActionResult Create()
         {
-            var departments = db.Departments.ToList();
-            ViewBag.DepartmentId = new SelectList(departments, "Id", "Code");
+            //var departments = db.Departments.ToList();
+            ViewBag.Departments = new SelectList(db.Departments, "Id", "Code");
             return View();
         }
 

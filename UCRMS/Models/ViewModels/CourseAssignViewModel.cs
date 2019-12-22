@@ -35,7 +35,7 @@ namespace UCRMS.Models.ViewModels
         [Display(Name ="Credit")]
         public double CourseCredit { get; set; }
 
-        public virtual Department Department { get; set; }
+        //public virtual Department Department { get; set; }
 
         //public virtual Teacher Teacher { get; set; }
 

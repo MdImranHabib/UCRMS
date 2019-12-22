@@ -17,11 +17,11 @@ namespace UCRMS.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
        
-        public async Task<ActionResult> Index()
-        {
-            var courses = db.Courses.Include(c => c.Department).Include(c => c.Semester);
-            return View(await courses.ToListAsync());
-        }
+        //public async Task<ActionResult> Index()
+        //{
+        //    var courses = db.Courses.Include(c => c.Department).Include(c => c.Semester);
+        //    return View(await courses.ToListAsync());
+        //}
 
         // GET: Courses/Details/5
         //public async Task<ActionResult> Details(int? id)
@@ -37,6 +37,18 @@ namespace UCRMS.Controllers
         //    }
         //    return View(course);
         //}
+
+        public ActionResult ShowCourseStatistics()
+        {
+            ViewBag.Departments = new SelectList(db.Departments, "Id", "Code");
+            return View();
+        }
+
+        public JsonResult GetCourseStatistics(int deptId)
+        {
+            var courses = db.Courses.Where(x => x.DepartmentId == deptId).ToList();
+            return Json(courses, JsonRequestBehavior.AllowGet);
+        }
 
         public JsonResult IsCodeExist(string Code)
         {

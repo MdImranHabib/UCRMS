@@ -1,0 +1,93 @@
+﻿@model UCRMS.Models.Course
+@{
+    ViewBag.Title = "Course Statistics";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-center">View Course Statistics</h2>
+<hr />
+
+<div class="well">
+    <div class="form-horizontal col-md-offset-3">
+        <div class="form-group">
+            @Html.LabelFor(model => model.DepartmentId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("Departments", null, "--Select Department--", htmlAttributes: new { @class = "form-control" })
+            </div>
+        </div>
+    </div>
+    <hr />
+    <label id="messageLabel" style="color: #00B16A; font-weight: normal; font-size: 20px;"></label>
+    <br />
+    <br />
+    <h3>Course information</h3>
+    <table class="table table-bordered text-center">
+        <thead>
+            <tr class="bg-primary">
+                <th class="text-center">
+                    @Html.DisplayNameFor(model => model.Code)
+                </th>
+                <th class="text-center">
+                    @Html.DisplayNameFor(model => model.Name)/Title
+                </th>
+                <th class="text-center">
+                    @Html.DisplayNameFor(model => model.SemesterId)
+                </th>
+                <th class="text-center">
+                    @Html.DisplayNameFor(model => model.AssignTo)
+                </th>
+            </tr>
+        </thead>
+        <tbody class="bg-info" id="CourseTable">
+
+        </tbody>
+    </table>
+</div>
+
+@section Scripts {
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $("#Departments").change(function () {
+
+                $("#CourseTable").empty();
+                var departmentId = $("#Departments").val();
+                $("#messageLabel").text("");
+                var parameter = { deptId:departmentId };
+
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("GetCourseStatistics", "Courses")',
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(parameter),
+                    dataType: "json",
+                    success: function (data) {
+                        $.each(data, function (key, value) {
+
+                            $("#CourseTable").append('<tr>' +
+                                '<td>' + value.Code + '</td>' +
+                                '<td>' + value.Name + '</td>' + 
+                                '<td>' + value.Semester.Name + '</td>' +
+                                '<td>' + value.AssignTo + '</td>' +
+                                '</tr>'
+                                );
+                        });
+
+                        if (data == null)
+                        {
+                            $("#messageLabel").text("This Department has no Course.");
+                        }
+                           
+                    }
+
+                });
+
+            
+            });
+        });
+    </script>
+
+}

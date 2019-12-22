@@ -16,11 +16,11 @@ namespace UCRMS.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        public async Task<ActionResult> Index()
-        {
-            var teachers = db.Teachers.Include(t => t.Department).Include(t => t.Designation);
-            return View(await teachers.ToListAsync());
-        }
+        //public async Task<ActionResult> Index()
+        //{
+        //    var teachers = db.Teachers.Include(t => t.Department).Include(t => t.Designation);
+        //    return View(await teachers.ToListAsync());
+        //}
 
         // GET: Teachers/Details/5
         //public async Task<ActionResult> Details(int? id)

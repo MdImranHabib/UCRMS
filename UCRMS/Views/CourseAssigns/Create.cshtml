@@ -13,89 +13,129 @@
     {
         @Html.AntiForgeryToken()
 
-    <div class="form-horizontal col-md-offset-2">
+        <div class="form-horizontal col-md-offset-2">
 
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.DepartmentId, htmlAttributes: new { @class = "control-label col-md-3" })
-            <div class="col-md-9">
-                @Html.DropDownList("DepartmentId", null, "--Select Department--", htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.DepartmentId, "", new { @class = "text-danger" })
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.DepartmentId, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.DropDownList("Departments", null, "--Select Department--", htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.DepartmentId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.TeacherId, htmlAttributes: new { @class = "control-label col-md-3" })
+                @*@Html.Label("Teacher", htmlAttributes: new { @class = "control-label col-md-2" })*@
+                <div class="col-md-9">
+                    @*@Html.DropDownList("TeacherId", null, "--Select Teacher--", htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.TeacherId, "", new { @class = "text-danger" })*@
+                    <Select class="form-control" id="Teachers">
+                        <option value="">--Select Teacher--</option>
+                    </Select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Credittobetaken, htmlAttributes: new { @class = "control-label col-md-3" })
+                @*@Html.Label("Credit to be taken", htmlAttributes: new { @class = "control-label col-md-2" })*@
+                <div class="col-md-9">
+                    @*@Html.TextBox("Credittobetaken", null, htmlAttributes: new { @class = "form-control", @readonly = "readonly" })*@
+                    @Html.TextBoxFor(m => m.Credittobetaken, new { @class = "form-control", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(m => m.Credittobetaken, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.RemainingCredit, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.TextBoxFor(m => m.RemainingCredit, new { @class = "form-control", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(m => m.RemainingCredit, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.CourseId, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    <Select class="form-control" id="Courses">
+                        <option value="">--Select Course--</option>
+                    </Select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.CourseName, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.TextBoxFor(m => m.CourseName, new { @class = "form-control", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(m => m.CourseName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.CourseCredit, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.TextBoxFor(m => m.CourseCredit, new { @class = "form-control", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(m => m.CourseCredit, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-3 col-md-9">
+                    <input type="submit" value="Assign" id="assignButton" class="btn btn-success" />
+                </div>
             </div>
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.TeacherId, htmlAttributes: new { @class = "control-label col-md-3" })
-            @*@Html.Label("Teacher", htmlAttributes: new { @class = "control-label col-md-2" })*@
-            <div class="col-md-9">
-                @*@Html.DropDownList("TeacherId", null, "--Select Teacher--", htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.TeacherId, "", new { @class = "text-danger" })*@
-                <Select class="form-control" id="Teachers">
-                    <option value="">--Select Teacher--</option>
-                </Select>
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Credittobetaken, htmlAttributes: new { @class = "control-label col-md-3" })
-            @*@Html.Label("Credit to be taken", htmlAttributes: new { @class = "control-label col-md-2" })*@
-            <div class="col-md-9">
-                @*@Html.TextBox("Credittobetaken", null, htmlAttributes: new { @class = "form-control", @readonly = "readonly" })*@
-                @Html.TextBoxFor(m => m.Credittobetaken, new { @class = "form-control", @readonly = "readonly" })
-                @Html.ValidationMessageFor(m => m.Credittobetaken, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.RemainingCredit, htmlAttributes: new { @class = "control-label col-md-3" })
-            <div class="col-md-9">
-                @Html.TextBoxFor(m => m.RemainingCredit, new { @class = "form-control", @readonly = "readonly" })
-                @Html.ValidationMessageFor(m => m.RemainingCredit, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.CourseId, htmlAttributes: new { @class = "control-label col-md-3" })
-            <div class="col-md-9">
-                <Select class="form-control" id="Courses">
-                    <option value="">--Select Course--</option>
-                </Select>
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.CourseName, htmlAttributes: new { @class = "control-label col-md-3" })
-            <div class="col-md-9">
-                @Html.TextBoxFor(m => m.CourseName, new { @class = "form-control", @readonly = "readonly" })
-                @Html.ValidationMessageFor(m => m.CourseName, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.CourseCredit, htmlAttributes: new { @class = "control-label col-md-3" })
-            <div class="col-md-9">
-                @Html.TextBoxFor(m => m.CourseCredit, new { @class = "form-control", @readonly = "readonly" })
-                @Html.ValidationMessageFor(m => m.CourseCredit, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-3 col-md-9">
-                <input type="submit" value="Assign" id="assignButton" class="btn btn-success" />
-            </div>
-        </div>
-    </div>
     }
 </div>
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 
 @section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-
+    @*@Scripts.Render("~/bundles/jqueryval")*@
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
     <script>
-       
+        $(document).ready(function () {
+            $("#Departments").change(function () {
+
+                $("#Teachers").empty();
+                var departmentId = $("#Departments").val();
+                var parameter = { deptId: departmentId };
+                $("#Teachers").append('<option value=0>-- Select Teacher --</option>');
+
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("GetTeachersByDeptId", "CourseAssigns")',
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(parameter),
+                    success: function(teacherList) {
+                        $.each(teacherList, function(key, value) {
+                            $("#Teachers").append('<option value=' + value.Id + '>' + value.Name + '</option>');
+                        });
+                    },
+
+                });
+
+                $("#Courses").empty();
+                //var departmentId = $("#Departments").val();
+                //var parameter = { deptId: departmentId };
+                $("#Courses").append('<option value=0>-- Select Course --</option>');
+                $.ajax({
+
+                    type: "POST",
+                    url: '@Url.Action("GetCoursesByDeptId", "CourseAssigns")',
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(parameter),
+                    success: function(courseList) {
+                        $.each(courseList, function(key, value) {
+
+                            $("#Courses").append('<option value=' + value.Id + '>' + value.Name + '</option>');
+
+                        });
+                    },
+
+                });
+            });
+        });
     </script>
 }
