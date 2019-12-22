@@ -1,176 +1,139 @@
 ﻿@model UCRMS.Models.ViewModels.CourseAssignViewModel
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Course Assign";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Assign Course to Teacher</h2>
+<h2 class="text-center">Assign Course to Teacher</h2>
+<hr />
 
+<div class="well">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
+        <div class="form-horizontal col-md-offset-2">
 
-<div class="form-horizontal">
-    <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.DepartmentId, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.DropDownList("Departments", null, "--Select Department--", htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.DepartmentId, "", new { @class = "text-danger" })
+                </div>
+            </div>
 
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <div class="form-group">
-        @Html.LabelFor(model => model.DepartmentId, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("Departments", null, "--Select Department--", htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.DepartmentId, "", new { @class = "text-danger" })
-        </div>
-    </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.TeacherId, htmlAttributes: new { @class = "control-label col-md-3" })
+                @*@Html.Label("Teacher", htmlAttributes: new { @class = "control-label col-md-2" })*@
+                <div class="col-md-9">
+                    @*@Html.DropDownList("TeacherId", null, "--Select Teacher--", htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.TeacherId, "", new { @class = "text-danger" })*@
+                    <Select class="form-control" id="Teachers">
+                        <option value="">--Select Teacher--</option>
+                    </Select>
+                </div>
+            </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.TeacherId, htmlAttributes: new { @class = "control-label col-md-2" })
-        @*@Html.Label("Teacher", htmlAttributes: new { @class = "control-label col-md-2" })*@
-        <div class="col-md-10">
-            @*@Html.DropDownList("TeacherId", null, "--Select Teacher--", htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.TeacherId, "", new { @class = "text-danger" })*@
-            <Select class="form-control" id="teacherId">
-                <option value="">--Select Teacher--</option>
-            </Select>
-        </div>
-    </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Credittobetaken, htmlAttributes: new { @class = "control-label col-md-3" })
+                @*@Html.Label("Credit to be taken", htmlAttributes: new { @class = "control-label col-md-2" })*@
+                <div class="col-md-9">
+                    @*@Html.TextBox("Credittobetaken", null, htmlAttributes: new { @class = "form-control", @readonly = "readonly" })*@
+                    @Html.TextBoxFor(m => m.Credittobetaken, new { @class = "form-control", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(m => m.Credittobetaken, "", new { @class = "text-danger" })
+                </div>
+            </div>
 
-    <div class="form-group">
-        @Html.Label("Credit to be taken", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.TextBox("Credittobetaken", null, htmlAttributes: new { @class = "form-control", @readonly = "readonly" })
-        </div>
-    </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.RemainingCredit, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.TextBoxFor(m => m.RemainingCredit, new { @class = "form-control", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(m => m.RemainingCredit, "", new { @class = "text-danger" })
+                </div>
+            </div>
 
-    <div class="form-group">
-        @Html.Label("Remaining Credit", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.TextBox("RemainingCredit", null, htmlAttributes: new { @class = "form-control", @readonly = "readonly" })
-        </div>
-    </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.CourseId, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    <Select class="form-control" id="Courses">
+                        <option value="">--Select Course--</option>
+                    </Select>
+                </div>
+            </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.CourseId, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @*@Html.DropDownList("CourseId", null, "--Select Course--", htmlAttributes: new { @class = "form-control" })
-        @Html.ValidationMessageFor(model => model.CourseId, "", new { @class = "text-danger" })*@
-            <Select class="form-control" id="courseId">
-                <option value="">--Select Course--</option>
-            </Select>
-        </div>
-    </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.CourseName, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.TextBoxFor(m => m.CourseName, new { @class = "form-control", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(m => m.CourseName, "", new { @class = "text-danger" })
+                </div>
+            </div>
 
-    <div class="form-group">
-        @Html.Label("Name", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.TextBox("CourseName", null, htmlAttributes: new { @class = "form-control", @readonly = "readonly" })
-        </div>
-    </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.CourseCredit, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.TextBoxFor(m => m.CourseCredit, new { @class = "form-control", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(m => m.CourseCredit, "", new { @class = "text-danger" })
+                </div>
+            </div>
 
-    <div class="form-group">
-        @Html.Label("Credit", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.TextBox("CourseCredit", null, htmlAttributes: new { @class = "form-control", @readonly = "readonly" })
-        </div>
-    </div>
-
-    @*<div class="form-group">
-        @Html.LabelFor(model => model.IsAssigned, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            <div class="checkbox">
-                @Html.EditorFor(model => model.IsAssigned)
-                @Html.ValidationMessageFor(model => model.IsAssigned, "", new { @class = "text-danger" })
+            <div class="form-group">
+                <div class="col-md-offset-3 col-md-9">
+                    <input type="submit" value="Assign" id="assignButton" class="btn btn-success" />
+                </div>
             </div>
         </div>
-    </div>*@
-
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Assign" class="btn btn-success" />
-        </div>
-    </div>
+    }
 </div>
-}
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 
 @section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-
+    @*@Scripts.Render("~/bundles/jqueryval")*@
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
     <script>
-        $(document).ready(function() {
-            $("#DepartmentId").change(function () {
-                //$("#teacherId").empty();
-                //$("#courseId").empty();
-                //$("#teacherId").append('<option value="">--Select Teacher--</option>');
-                //$("#courseId").append('<option value="">--Select Course--</option>');
-                //$("#Credittobetaken").val('');
-                //$("#RemainingCredit").val('');
-                //$("#CourseName").val('');
-                //$("#CourseCredit").val('');
-                var deptId = $("#DepartmentId").val();
-                var parameter = { id: deptId };
+        $(document).ready(function () {
+            $("#Departments").change(function () {
+
+                $("#Teachers").empty();
+                var departmentId = $("#Departments").val();
+                var parameter = { deptId: departmentId };
+                $("#Teachers").append('<option value=0>-- Select Teacher --</option>');
+
                 $.ajax({
                     type: "POST",
-                    url:'@Url.Action("GetTeachersByDeptId", "CourseAssigns")',
-                    contentType: "application/json;charset=utf-8",
+                    url: '@Url.Action("GetTeachersByDeptId", "CourseAssigns")',
+                    contentType: "application/json; charset=utf-8",
                     data: JSON.stringify(parameter),
-                    success: function (teacherList) {
+                    success: function(teacherList) {
                         $.each(teacherList, function(key, value) {
-                            $("#teacherId").append('<option value=' + value.Id + '>' + value.Name + '</option>')                           
+                            $("#Teachers").append('<option value=' + value.Id + '>' + value.Name + '</option>');
                         });
-                    }
+                    },
+
                 });
 
+                $("#Courses").empty();
+                //var departmentId = $("#Departments").val();
+                //var parameter = { deptId: departmentId };
+                $("#Courses").append('<option value=0>-- Select Course --</option>');
                 $.ajax({
+
                     type: "POST",
-                    url:'@Url.Action("GetCoursesByDeptId", "CourseAssigns")',
-                    contentType: "application/json;charset=utf-8",
+                    url: '@Url.Action("GetCoursesByDeptId", "CourseAssigns")',
+                    contentType: "application/json; charset=utf-8",
                     data: JSON.stringify(parameter),
-                    success: function (courseList) {
+                    success: function(courseList) {
                         $.each(courseList, function(key, value) {
-                            $("#courseId").append('<option value=' + value.Id + '>' + value.Code + '</option>')
+
+                            $("#Courses").append('<option value=' + value.Id + '>' + value.Name + '</option>');
+
                         });
-                    }
-                });
-            });
+                    },
 
-            $("#teacherId").change(function () {
-                var teacherId = $("#teacherId").val();
-                var parameter = { id: teacherId };
-                $("#Credittobetaken").val('');
-                $("#RemainingCredit").val('');
-                $("#CourseName").val('');
-                $("#CourseCredit").val('');
-                $.ajax({
-                    type: "POST",
-                    url:'@Url.Action("GetTeachersById", "CourseAssigns")',
-                    contentType: "application/json;charset=utf-8",
-                    data: JSON.stringify(parameter),
-                    success: function (teacher) {
-                        $("#Credittobetaken").val(teacher.Credittobetaken);
-                        $("#RemainingCredit").val(teacher.Credittobetaken);
-                    }
-                });
-            });
-
-            $("#courseId").change(function () {
-                var courseId = $("#courseId").val();
-                var parameter = { id: courseId };
-                $("#CourseName").val('');
-                $("#CourseCredit").val('');
-                $.ajax({
-                    type: "POST",
-                    url:'@Url.Action("GetCoursesById", "CourseAssigns")',
-                    contentType: "application/json;charset=utf-8",
-                    data: JSON.stringify(parameter),
-                    success: function (course) {
-                        $("#CourseName").val(course.Name);
-                        $("#CourseCredit").val(course.Credit);
-                    }
                 });
             });
         });

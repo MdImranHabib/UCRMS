@@ -9,6 +9,8 @@ using System.Web;
 using System.Web.Mvc;
 using UCRMS.Models;
 using UCRMS.Models.ViewModels;
+using Vereyon.Web;
+using System.Data.Entity.Migrations;
 
 namespace UCRMS.Controllers
 {
@@ -37,15 +39,15 @@ namespace UCRMS.Controllers
         //    return View(courseAssign);
         //}
 
-        public JsonResult GetTeachersByDeptId(int id)
+        public JsonResult GetTeachersByDeptId(int deptId)
         {
-            var teachers = db.Teachers.Where(x => x.DepartmentId == id).ToList();
-            return Json(teachers,JsonRequestBehavior.AllowGet);
+            var teachers = db.Teachers.Where(x => x.DepartmentId == deptId).ToList();
+            return Json(teachers);
         }
 
-        public JsonResult GetCoursesByDeptId(int id)
+        public JsonResult GetCoursesByDeptId(int deptId)
         {
-            var courses = db.Courses.Where(x => x.DepartmentId == id).ToList();
+            var courses = db.Courses.Where(x => x.DepartmentId == deptId).ToList();
             return Json(courses);
         }
 
@@ -63,24 +65,53 @@ namespace UCRMS.Controllers
 
         public ActionResult Create()
         {
-            ViewBag.Departmens = new SelectList(db.Departments, "Id", "Code");
+            //var departments = db.Departments.ToList();
+            ViewBag.Departments = new SelectList(db.Departments, "Id", "Code");
             return View();
         }
 
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<ActionResult> Create([Bind(Include = "Id,DepartmentId,TeacherId,Credittobetaken,RemainingCredit,CourseId,CourseName,CourseCredit")] CourseAssignViewModel courseAssignViewModel)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        db.CourseAssigns.Add();
-        //        await db.SaveChangesAsync();
-        //        return RedirectToAction("Index");
-        //    }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Create([Bind(Include = "Id,DepartmentId,TeacherId,Credittobetaken,RemainingCredit,CourseId,CourseName,CourseCredit")] CourseAssignViewModel courseAssignViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                if (db.CourseAssigns.Any(x => x.CourseId == courseAssignViewModel.CourseId))
+                {
+                    FlashMessage.Danger("This Course already has been Assigned");
+                }
+                else
+                {
+                    CourseAssign courseAssign = new CourseAssign()
+                    {
+                        TeacherId = courseAssignViewModel.TeacherId,
+                        CourseId = courseAssignViewModel.CourseId
+                    };
 
-        //    ViewBag.Departmens = new SelectList(db.Departments, "Id", "Code");
-        //    return View(courseAssignViewModel);
-        //}
+                    db.CourseAssigns.Add(courseAssign);
+                    await db.SaveChangesAsync();
+
+                    var teacher = db.Teachers.FirstOrDefault(x => x.Id == courseAssignViewModel.TeacherId);
+                    var course = db.Courses.FirstOrDefault(x => x.Id == courseAssignViewModel.CourseId);
+
+                    teacher.RemainingCredit = teacher.RemainingCredit - course.Credit;
+                    db.Teachers.AddOrUpdate(teacher);
+                    await db.SaveChangesAsync();
+
+                    course.Status = true;
+                    course.AssignTo = teacher.Name;
+                    db.Courses.AddOrUpdate(course);
+                    await db.SaveChangesAsync();
+
+                    FlashMessage.Confirmation("The Course " + course.Name + " Successfully Assigned to " + teacher.Name);
+                }
+               
+                return RedirectToAction("Create");
+            }
+
+            ViewBag.Departmens = new SelectList(db.Departments, "Id", "Code");
+            return View(courseAssignViewModel);
+        }
 
         // GET: CourseAssigns/Edit/5
         //public async Task<ActionResult> Edit(int? id)

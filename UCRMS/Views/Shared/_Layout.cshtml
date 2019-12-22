@@ -29,8 +29,27 @@
                             <li>@Html.ActionLink("View All Departments", "Index", "Departments")</li>
                         </ul>
                     </li>
-                    <li>@Html.ActionLink("Save Course", "Create", "Courses")</li>
-                    <li>@Html.ActionLink("Save Teacher", "Create", "Teachers")</li>
+                    <li>
+                        @Html.ActionLink("Course", "Create", "Courses")
+                        <ul>
+                            <li>@Html.ActionLink("Save Course", "Create", "Courses")</li>
+                            <li>@Html.ActionLink("View Course Statistic", "Index", "Courses")</li>
+                        </ul>
+                    </li>
+                    <li>
+                        @Html.ActionLink("Teacher", "Create", "Teachers")
+                        <ul>
+                            <li>@Html.ActionLink("Save Teacher", "Create", "Teachers")</li>
+                            <li>@Html.ActionLink("Assign Course", "Create", "CourseAssigns")</li>
+                        </ul>
+                    </li>
+                    <li>
+                        @Html.ActionLink("Student", "Create", "Students")
+                        <ul>
+                            <li>@Html.ActionLink("Register Student", "Create", "Students")</li>
+                            <li>@Html.ActionLink("Enroll in Course", "Create", "Enrolls")</li>
+                        </ul>
+                    </li>
                 </ul>
                 
                 @*@Html.Partial("_LoginPartial")*@
