@@ -172,6 +172,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CourseAssignsController.cs" />
+    <Compile Include="Controllers\CourseEnrollsController.cs" />
     <Compile Include="Controllers\CoursesController.cs" />
     <Compile Include="Controllers\DepartmentsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -213,16 +214,26 @@
     <Compile Include="Migrations\201912222056362_Imran-07.Designer.cs">
       <DependentUpon>201912222056362_Imran-07.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201912230625437_Imran-08.cs" />
+    <Compile Include="Migrations\201912230625437_Imran-08.Designer.cs">
+      <DependentUpon>201912230625437_Imran-08.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912230628575_Imran-09.cs" />
+    <Compile Include="Migrations\201912230628575_Imran-09.Designer.cs">
+      <DependentUpon>201912230628575_Imran-09.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Course.cs" />
     <Compile Include="Models\CourseAssign.cs" />
+    <Compile Include="Models\CourseEnroll.cs" />
     <Compile Include="Models\Day.cs" />
     <Compile Include="Models\Department.cs" />
     <Compile Include="Models\Designation.cs" />
     <Compile Include="Models\Grade.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Result.cs" />
     <Compile Include="Models\Room.cs" />
     <Compile Include="Models\Semester.cs" />
     <Compile Include="Models\Student.cs" />
@@ -325,6 +336,11 @@
     <Content Include="Views\Students\Edit.cshtml" />
     <Content Include="Views\Students\Index.cshtml" />
     <Content Include="Views\Courses\ShowCourseStatistics.cshtml" />
+    <Content Include="Views\CourseEnrolls\Create.cshtml" />
+    <Content Include="Views\CourseEnrolls\Delete.cshtml" />
+    <Content Include="Views\CourseEnrolls\Details.cshtml" />
+    <Content Include="Views\CourseEnrolls\Edit.cshtml" />
+    <Content Include="Views\CourseEnrolls\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -364,6 +380,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912222056362_Imran-07.resx">
       <DependentUpon>201912222056362_Imran-07.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912230625437_Imran-08.resx">
+      <DependentUpon>201912230625437_Imran-08.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912230628575_Imran-09.resx">
+      <DependentUpon>201912230628575_Imran-09.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
