@@ -91,7 +91,7 @@
 
 @section Scripts {
     @*@Scripts.Render("~/bundles/jqueryval")*@
-    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
     <script src="~/Scripts/jquery.validate.min.js"></script>
     <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
     <script>
@@ -133,6 +133,14 @@
 
                         });
                     },
+
+                    error: function (courseList) {
+                        $.each(courseList, function (key, value) {
+
+                            $("#Courses").append('<option value=' + value.Id + '>' + value.Name + '</option>');
+
+                        });
+                    }
 
                 });
             });

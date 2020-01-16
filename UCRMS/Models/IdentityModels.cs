@@ -47,5 +47,7 @@ namespace UCRMS.Models
         public DbSet<Grade> Grades { get; set; }
         public DbSet<Day> Days { get; set; }
         public DbSet<Room> Rooms { get; set; }
+        public DbSet<CourseEnroll> CourseEnrolls { get; set; }
+        public DbSet<Result> Results { get; set; }
     }
 }
