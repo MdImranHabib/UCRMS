@@ -33,6 +33,7 @@
                     <Select class="form-control" name="TeacherId" id="Teachers">
                         <option value="">--Select Teacher--</option>
                     </Select>
+                    @Html.ValidationMessageFor(model => model.TeacherId, "", new { @class = "text-danger" })
                 </div>
             </div>
 
