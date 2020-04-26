@@ -1,0 +1,150 @@
+﻿@model UCRMS.Models.ClassSchedule
+@using Vereyon.Web;
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-center">Allocate Classroom</h2>
+<hr />
+
+@Html.RenderFlashMessages()
+
+<div class="well">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal col-md-offset-3">
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.DepartmentId, "Department", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("DepartmentId", null, "--Select Department--", htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.DepartmentId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.CourseId, "Course", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @*@Html.DropDownList("CourseId", null, htmlAttributes: new { @class = "form-control" })*@
+                    <Select class="form-control" name="CourseId" id="Courses">
+                        <option value="">--Select Course--</option>
+                    </Select>
+                    @Html.ValidationMessageFor(model => model.CourseId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.RoomId, "RoomId", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("RoomId", null, "--Select Room--", htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.RoomId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Day, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @*@Html.EditorFor(model => model.Day, new { htmlAttributes = new { @class = "form-control" } })*@
+                    <select class="form-control" name="Day">
+                        <option value="">-- Select Day --</option>
+                        <option value="Sat">Saturday</option>
+                        <option value="Sun">Sunday</option>
+                        <option value="Mon">Monday</option>
+                        <option value="Tue">Tuesday</option>
+                        <option value="Wed">Wednesday</option>
+                        <option value="Thu">Thursday</option>
+                        <option value="Fri">Friday</option>
+                    </select>
+                    @Html.ValidationMessageFor(model => model.Day, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.StartTime, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.StartTime, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.StartTime, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.EndTime, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.EndTime, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.EndTime, "", new { @class = "text-danger" })
+                </div>
+                <span class="text-danger" id="msg"></span>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Allocate" class="btn btn-success" />
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+
+@section Scripts {
+    @*@Scripts.Render("~/bundles/jqueryval")*@
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#DepartmentId").change(function () {
+
+                $("#Courses").empty();
+                var departmentId = $("#DepartmentId").val();
+                var parameter = { deptId: departmentId };
+                $("#Courses").append('<option value=0>-- Select Course --</option>');
+
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("GetCoursesByDeptId", "CourseAssigns")',
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(parameter),
+                    success: function(courseList) {
+                        $.each(courseList, function(key, value) {
+                            $("#Courses").append('<option value=' + value.Id + '>' + value.Code + '</option>');
+                        });
+                    }
+                });
+            });
+
+            $("#EndTime").click(function () {
+                var startTime = $("#StartTime").val();
+                var endTime = $("#EndTime").val();
+
+                if (startTime >= endTime) {
+                    $("#msg").text("Ending time can not be smaller/equal to starting time");
+                    return false;
+                }
+                else {
+                    $("#msg").text("");
+                    return true;
+                }
+            });
+
+            $("#EndTime").keyup(function () {
+                var startTime = $("#StartTime").val();
+                var endTime = $("#EndTime").val();
+
+                if (startTime >= endTime) {
+                    $("#msg").text("Ending time can not be smaller/equal to starting time");
+                    return false;
+                }
+                else {
+                    $("#msg").text("");
+                    return true;
+                }
+            });
+        });
+    </script>
+}

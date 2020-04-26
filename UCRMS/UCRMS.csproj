@@ -171,6 +171,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ClassSchedulesController.cs" />
     <Compile Include="Controllers\CourseAssignsController.cs" />
     <Compile Include="Controllers\CourseEnrollsController.cs" />
     <Compile Include="Controllers\CoursesController.cs" />
@@ -222,12 +223,16 @@
     <Compile Include="Migrations\201912230628575_Imran-09.Designer.cs">
       <DependentUpon>201912230628575_Imran-09.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202004261926153_imran-10.cs" />
+    <Compile Include="Migrations\202004261926153_imran-10.Designer.cs">
+      <DependentUpon>202004261926153_imran-10.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\ClassSchedule.cs" />
     <Compile Include="Models\Course.cs" />
     <Compile Include="Models\CourseAssign.cs" />
     <Compile Include="Models\CourseEnroll.cs" />
-    <Compile Include="Models\Day.cs" />
     <Compile Include="Models\Department.cs" />
     <Compile Include="Models\Designation.cs" />
     <Compile Include="Models\Grade.cs" />
@@ -341,6 +346,11 @@
     <Content Include="Views\CourseEnrolls\Details.cshtml" />
     <Content Include="Views\CourseEnrolls\Edit.cshtml" />
     <Content Include="Views\CourseEnrolls\Index.cshtml" />
+    <Content Include="Views\ClassSchedules\Create.cshtml" />
+    <Content Include="Views\ClassSchedules\Delete.cshtml" />
+    <Content Include="Views\ClassSchedules\Details.cshtml" />
+    <Content Include="Views\ClassSchedules\Edit.cshtml" />
+    <Content Include="Views\ClassSchedules\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -386,6 +396,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912230628575_Imran-09.resx">
       <DependentUpon>201912230628575_Imran-09.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004261926153_imran-10.resx">
+      <DependentUpon>202004261926153_imran-10.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
