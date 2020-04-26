@@ -19,9 +19,11 @@ namespace UCRMS.Models.ViewModels
         [Display(Name = "Teacher")]
         public int TeacherId { get; set; }
 
+        [Required]
         [Display(Name = "Credit to be taken")]
         public double Credittobetaken { get; set; }
 
+        [Required]
         [Display(Name = "Remaining Credit")]
         public double RemainingCredit { get; set; }
 
@@ -29,9 +31,11 @@ namespace UCRMS.Models.ViewModels
         [Display(Name = "Course Code")]
         public int CourseId { get; set; }
 
+        [Required]
         [Display(Name ="Name")]
         public string CourseName { get; set; }
 
+        [Required]
         [Display(Name ="Credit")]
         public double CourseCredit { get; set; }
 

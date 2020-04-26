@@ -1,4 +1,5 @@
 ﻿@model UCRMS.Models.ViewModels.CourseAssignViewModel
+@using Vereyon.Web;
 
 @{
     ViewBag.Title = "Course Assign";
@@ -7,6 +8,8 @@
 
 <h2 class="text-center">Assign Course to Teacher</h2>
 <hr />
+
+@Html.RenderFlashMessages()
 
 <div class="well">
     @using (Html.BeginForm())
@@ -26,11 +29,8 @@
 
             <div class="form-group">
                 @Html.LabelFor(model => model.TeacherId, htmlAttributes: new { @class = "control-label col-md-3" })
-                @*@Html.Label("Teacher", htmlAttributes: new { @class = "control-label col-md-2" })*@
                 <div class="col-md-9">
-                    @*@Html.DropDownList("TeacherId", null, "--Select Teacher--", htmlAttributes: new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.TeacherId, "", new { @class = "text-danger" })*@
-                    <Select class="form-control" id="Teachers">
+                    <Select class="form-control" name="TeacherId" id="Teachers">
                         <option value="">--Select Teacher--</option>
                     </Select>
                 </div>
@@ -38,9 +38,7 @@
 
             <div class="form-group">
                 @Html.LabelFor(model => model.Credittobetaken, htmlAttributes: new { @class = "control-label col-md-3" })
-                @*@Html.Label("Credit to be taken", htmlAttributes: new { @class = "control-label col-md-2" })*@
                 <div class="col-md-9">
-                    @*@Html.TextBox("Credittobetaken", null, htmlAttributes: new { @class = "form-control", @readonly = "readonly" })*@
                     @Html.TextBoxFor(m => m.Credittobetaken, new { @class = "form-control", @readonly = "readonly" })
                     @Html.ValidationMessageFor(m => m.Credittobetaken, "", new { @class = "text-danger" })
                 </div>
@@ -57,7 +55,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.CourseId, htmlAttributes: new { @class = "control-label col-md-3" })
                 <div class="col-md-9">
-                    <Select class="form-control" id="Courses">
+                    <Select class="form-control" name="CourseId" id="Courses">
                         <option value="">--Select Course--</option>
                     </Select>
                 </div>
@@ -84,6 +82,7 @@
                     <input type="submit" value="Assign" id="assignButton" class="btn btn-success" />
                 </div>
             </div>
+
         </div>
     }
 </div>
@@ -99,9 +98,11 @@
             $("#Departments").change(function () {
 
                 $("#Teachers").empty();
+                $("#Courses").empty();
                 var departmentId = $("#Departments").val();
                 var parameter = { deptId: departmentId };
                 $("#Teachers").append('<option value=0>-- Select Teacher --</option>');
+                $("#Courses").append('<option value=0>-- Select Course --</option>');
 
                 $.ajax({
                     type: "POST",
@@ -112,38 +113,78 @@
                         $.each(teacherList, function(key, value) {
                             $("#Teachers").append('<option value=' + value.Id + '>' + value.Name + '</option>');
                         });
-                    },
-
+                    }
                 });
 
-                $("#Courses").empty();
-                //var departmentId = $("#Departments").val();
-                //var parameter = { deptId: departmentId };
-                $("#Courses").append('<option value=0>-- Select Course --</option>');
                 $.ajax({
-
                     type: "POST",
                     url: '@Url.Action("GetCoursesByDeptId", "CourseAssigns")',
                     contentType: "application/json; charset=utf-8",
                     data: JSON.stringify(parameter),
                     success: function(courseList) {
                         $.each(courseList, function(key, value) {
-
-                            $("#Courses").append('<option value=' + value.Id + '>' + value.Name + '</option>');
-
-                        });
-                    },
-
-                    error: function (courseList) {
-                        $.each(courseList, function (key, value) {
-
-                            $("#Courses").append('<option value=' + value.Id + '>' + value.Name + '</option>');
-
+                            $("#Courses").append('<option value=' + value.Id + '>' + value.Code + '</option>');
                         });
                     }
-
                 });
             });
+
+
+            $("#Teachers").change(function () {
+
+                $("#Credittobetaken").empty();
+                $("#RemainingCredit").empty();
+                var teacherId = $("#Teachers").val();
+                var parameter = { Id: teacherId };
+
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("GetTeachersById", "CourseAssigns")',
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(parameter),
+                    success: function (teacher) {
+                        $("#Credittobetaken").val(teacher.Credittobetaken);
+                        $("#RemainingCredit").val(teacher.RemainingCredit);
+                    }
+                });
+            });
+
+
+            $("#Courses").change(function () {
+
+                $("#CourseName").empty();
+                $("#CourseCredit").empty();
+                var courseId = $("#Courses").val();
+                var parameter = { Id: courseId };
+
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("GetCoursesById", "CourseAssigns")',
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(parameter),
+                    success: function (course) {
+                        $("#CourseName").val(course.Name);
+                        $("#CourseCredit").val(course.Credit);
+                    }
+                });
+            });
+
+
+            $("#assignButton").click(function () {
+
+                var remainingCredit = $("#RemainingCredit").val();
+                var courseCredit = $("#CourseCredit").val();
+
+                if (courseCredit > remainingCredit) {
+                    if (confirm("Course Credit is greater than teacher's remaining credit. Do you wnat to proceed?")) {
+                        return true;
+                    }
+                    else {
+                        return false;
+                    }
+                }
+            });
+
         });
     </script>
 }

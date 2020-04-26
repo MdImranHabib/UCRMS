@@ -65,7 +65,6 @@ namespace UCRMS.Controllers
 
         public ActionResult Create()
         {
-            //var departments = db.Departments.ToList();
             ViewBag.Departments = new SelectList(db.Departments, "Id", "Code");
             return View();
         }
