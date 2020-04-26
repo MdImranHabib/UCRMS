@@ -17,8 +17,7 @@
         </div>
     </div>
     <hr />
-    <label id="messageLabel" style="color: #00B16A; font-weight: normal; font-size: 20px;"></label>
-    <br />
+    <label id="messageLabel" class="text-danger text-center"></label>
     <br />
     <h3>Course information</h3>
     <table class="table table-bordered text-center">
@@ -54,8 +53,8 @@
             $("#Departments").change(function () {
 
                 $("#CourseTable").empty();
-                var departmentId = $("#Departments").val();
                 $("#messageLabel").text("");
+                var departmentId = $("#Departments").val();
                 var parameter = { deptId:departmentId };
 
                 $.ajax({
@@ -64,28 +63,24 @@
                     contentType: "application/json; charset=utf-8",
                     data: JSON.stringify(parameter),
                     dataType: "json",
-                    success: function (data) {
-                        $.each(data, function (key, value) {
-
-                            $("#CourseTable").append('<tr>' +
-                                '<td>' + value.Code + '</td>' +
-                                '<td>' + value.Name + '</td>' + 
-                                '<td>' + value.Semester.Name + '</td>' +
-                                '<td>' + value.AssignTo + '</td>' +
-                                '</tr>'
-                                );
-                        });
-
-                        if (data == null)
-                        {
+                    success: function (courseList) {
+                        if (courseList=="") {
                             $("#messageLabel").text("This Department has no Course.");
                         }
-                           
+                        else {
+                            $.each(courseList, function (key, value) {
+
+                                $("#CourseTable").append('<tr>' +
+                                    '<td>' + value.Code + '</td>' +
+                                    '<td>' + value.Name + '</td>' +
+                                    '<td>' + value.Semester.Name + '</td>' +
+                                    '<td>' + value.AssignTo + '</td>' +
+                                    '</tr>'
+                                );
+                            });
+                        }     
                     }
-
-                });
-
-            
+                });         
             });
         });
     </script>
