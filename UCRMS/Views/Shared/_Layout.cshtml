@@ -47,11 +47,18 @@
                             @Html.ActionLink("Student", "Create", "Students")
                             <ul>
                                 <li>@Html.ActionLink("Register Student", "Create", "Students")</li>
-                                <li>@Html.ActionLink("Enroll in Course", "Create", "Enrolls")</li>
+                                <li>@Html.ActionLink("Enroll in Course", "Create", "CourseEnrolls")</li>
                             </ul>
                         </li>
                         <li>@Html.ActionLink("Allocate Classroom", "Create", "ClassSchedules")</li>
                         <li>@Html.ActionLink("View Class Schedule", "ShowClassSchedule", "ClassSchedules")</li>
+                        <li>
+                            @Html.ActionLink("Result", "Create", "Results")
+                            <ul>
+                                <li>@Html.ActionLink("Save Student Result", "Create", "Results")</li>
+                                <li>@Html.ActionLink("View Result", "Create", "Results")</li>
+                            </ul>
+                        </li>
                     </ul>
                 
                 @*@Html.Partial("_LoginPartial")*@

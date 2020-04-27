@@ -91,7 +91,6 @@ namespace UCRMS.Controllers
                 return RedirectToAction("Create");
             }
 
-            //ViewBag.CourseId = new SelectList(db.Courses, "Id", "Code", classSchedule.CourseId);
             ViewBag.DepartmentId = new SelectList(db.Departments, "Id", "Code", classSchedule.DepartmentId);
             ViewBag.RoomId = new SelectList(db.Rooms, "Id", "Number", classSchedule.RoomId);
             return View(classSchedule);
