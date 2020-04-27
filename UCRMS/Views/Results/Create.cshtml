@@ -1,12 +1,12 @@
-﻿@model UCRMS.Models.CourseEnroll
+﻿@model UCRMS.Models.Result
 @using Vereyon.Web;
 
 @{
-    ViewBag.Title = "Course Enroll";
+    ViewBag.Title = "Save Result";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2 class="text-center">Enroll in a Course</h2>
+<h2 class="text-center">Save Student Result</h2>
 <hr />
 @Html.RenderFlashMessages()
 <div class="well">
@@ -17,11 +17,10 @@
         <div class="form-horizontal col-md-offset-3">
 
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
             <div class="form-group">
                 @Html.LabelFor(model => model.StudentId, "Student Reg. No.", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.DropDownList("StudentId", null,"-- Select Student --", htmlAttributes: new { @class = "form-control" })
+                    @Html.DropDownList("StudentId", null, "-- Select Student --", htmlAttributes: new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.StudentId, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -59,17 +58,16 @@
             </div>
 
             <div class="form-group">
-                @*@Html.LabelFor(model => model.EnrollDate, htmlAttributes: new { @class = "control-label col-md-2" })*@
-                <label class="control-label col-md-2">Date</label>
+                @Html.LabelFor(model => model.GradeId, "Grade", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.EnrollDate, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.EnrollDate, "", new { @class = "text-danger" })
+                    @Html.DropDownList("GradeId", null, "--Select Grade --", htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.GradeId, "", new { @class = "text-danger" })
                 </div>
             </div>
 
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" id="submitbtn" value="Enroll" class="btn btn-success" />
+                    <input type="submit" value="Save" class="btn btn-success" />
                 </div>
             </div>
         </div>
@@ -109,55 +107,17 @@
 
                 $.ajax({
                     type: "POST",
-                    url: '@Url.Action("GetCoursesByStudentId", "CourseEnrolls")',
+                    url: '@Url.Action("GetCoursesByStudentId", "Results")',
                     contentType: "application/json; charset=utf-8",
                     data: JSON.stringify(parameter),
                     success: function(courseList) {
                         $.each(courseList, function(key, value) {
-                            $("#courses").append('<option value=' + value.Id + '>' + value.Code + '</option>');
+                            $("#courses").append('<option value=' + value.CourseId + '>' + value.Course.Code + '</option>');
                         });
                     }
                 });
             });
-
-            $("#courses").change(function () {
-
-                $("#msg").text("");
-                var studentId = $("#StudentId").val();
-                var courseId = $("#courses").val();
-                var parameter = { stuId: studentId, courseId: courseId };
-
-                $.ajax({
-                    type: "POST",
-                    url: '@Url.Action("IsStudentEnrolled", "CourseEnrolls")',
-                    contentType: "application/json; charset=utf-8",
-                    data: JSON.stringify(parameter),
-                    success: function (data) {
-                        if (data == true) {
-                            $("#msg").text("This student already enrolled in this course.");
-                        }
-                    }
-                });
-            });
-
-            @*$("#submitbtn").click(function () {
-                var studentId = $("#StudentId").val();
-                var courseId = $("#courses").val();
-                var parameter = { stuId: studentId, courseId: courseId };
-
-                $.ajax({
-                    type: "POST",
-                    url: '@Url.Action("IsStudentEnrolled", "CourseEnrolls")',
-                    contentType: "application/json; charset=utf-8",
-                    data: JSON.stringify(parameter),
-                    success: function (data) {
-                        if (data == true) {
-                            $("#msg").text("This student already enrolled in this course.");
-                            return false;
-                        }
-                    }
-                });
-            });*@
+           
         });
     </script>
 }
