@@ -23,6 +23,7 @@ namespace UCRMS.Controllers
             return View(await classSchedules.ToListAsync());
         }
 
+
         // GET: ClassSchedules/Details/5
         public async Task<ActionResult> Details(int? id)
         {
@@ -94,6 +95,21 @@ namespace UCRMS.Controllers
             ViewBag.DepartmentId = new SelectList(db.Departments, "Id", "Code", classSchedule.DepartmentId);
             ViewBag.RoomId = new SelectList(db.Rooms, "Id", "Number", classSchedule.RoomId);
             return View(classSchedule);
+        }
+
+        public ActionResult ShowClassSchedule()
+        {
+            ViewBag.Departments = new SelectList(db.Departments, "Id", "Code");
+            return View();
+        }
+
+        public JsonResult GetClassSchedule(int deptId)
+        {
+            var classSchedules = db.ClassSchedules.Include(c => c.Course)
+                .Include(c => c.Department)
+                .Include(c => c.Room)
+                .Where(c => c.DepartmentId == deptId).ToList();
+            return Json(classSchedules, JsonRequestBehavior.AllowGet);
         }
 
         // GET: ClassSchedules/Edit/5

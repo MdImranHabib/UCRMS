@@ -21,36 +21,38 @@
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav menu">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>
-                        @Html.ActionLink("Departments", "Index", "Departments")
-                        <ul>
-                            <li>@Html.ActionLink("Save Department", "Create", "Departments")</li>
-                            <li>@Html.ActionLink("View All Departments", "Index", "Departments")</li>
-                        </ul>
-                    </li>
-                    <li>
-                        @Html.ActionLink("Course", "Create", "Courses")
-                        <ul>
-                            <li>@Html.ActionLink("Save Course", "Create", "Courses")</li>
-                            <li>@Html.ActionLink("View Course Statistic", "ShowCourseStatistics", "Courses")</li>
-                        </ul>
-                    </li>
-                    <li>
-                        @Html.ActionLink("Teacher", "Create", "Teachers")
-                        <ul>
-                            <li>@Html.ActionLink("Save Teacher", "Create", "Teachers")</li>
-                            <li>@Html.ActionLink("Assign Course", "Create", "CourseAssigns")</li>
-                        </ul>
-                    </li>
-                    <li>
-                        @Html.ActionLink("Student", "Create", "Students")
-                        <ul>
-                            <li>@Html.ActionLink("Register Student", "Create", "Students")</li>
-                            <li>@Html.ActionLink("Enroll in Course", "Create", "Enrolls")</li>
-                        </ul>
-                    </li>
-                </ul>
+                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                        <li>
+                            @Html.ActionLink("Departments", "Index", "Departments")
+                            <ul>
+                                <li>@Html.ActionLink("Save Department", "Create", "Departments")</li>
+                                <li>@Html.ActionLink("View All Departments", "Index", "Departments")</li>
+                            </ul>
+                        </li>
+                        <li>
+                            @Html.ActionLink("Course", "Create", "Courses")
+                            <ul>
+                                <li>@Html.ActionLink("Save Course", "Create", "Courses")</li>
+                                <li>@Html.ActionLink("View Course Statistic", "ShowCourseStatistics", "Courses")</li>
+                            </ul>
+                        </li>
+                        <li>
+                            @Html.ActionLink("Teacher", "Create", "Teachers")
+                            <ul>
+                                <li>@Html.ActionLink("Save Teacher", "Create", "Teachers")</li>
+                                <li>@Html.ActionLink("Assign Course", "Create", "CourseAssigns")</li>
+                            </ul>
+                        </li>
+                        <li>
+                            @Html.ActionLink("Student", "Create", "Students")
+                            <ul>
+                                <li>@Html.ActionLink("Register Student", "Create", "Students")</li>
+                                <li>@Html.ActionLink("Enroll in Course", "Create", "Enrolls")</li>
+                            </ul>
+                        </li>
+                        <li>@Html.ActionLink("Allocate Classroom", "Create", "ClassSchedules")</li>
+                        <li>@Html.ActionLink("View Class Schedule", "ShowClassSchedule", "ClassSchedules")</li>
+                    </ul>
                 
                 @*@Html.Partial("_LoginPartial")*@
                 </div>

@@ -1,0 +1,84 @@
+﻿@model UCRMS.Models.ClassSchedule
+@{
+    ViewBag.Title = "Class Schedule";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-center">View Class Schedule</h2>
+<hr />
+
+<div class="well">
+    <div class="form-horizontal col-md-offset-3">
+        <div class="form-group">
+            @Html.LabelFor(model => model.DepartmentId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("Departments", null, "--Select Department--", htmlAttributes: new { @class = "form-control" })
+            </div>
+        </div>
+    </div>
+    <hr />
+    <label id="messageLabel" class="text-danger text-center"></label>
+    <br />
+    <h3>Class Schedule information</h3>
+    <table class="table table-bordered text-center">
+        <thead>
+            <tr class="bg-primary">
+                <th class="text-center">
+                   Course @Html.DisplayNameFor(model => model.Course.Code)
+                </th>
+                <th class="text-center">
+                    @Html.DisplayNameFor(model => model.Course.Name)
+                </th>
+                <th class="text-center">
+                   Schedule Info
+                </th>
+            </tr>
+        </thead>
+        <tbody class="bg-info" id="ClassScheduleTable">
+
+        </tbody>
+    </table>
+</div>
+
+@section Scripts {
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $("#Departments").change(function () {
+
+                $("#ClassScheduleTable").empty();
+                $("#messageLabel").text("");
+                var departmentId = $("#Departments").val();
+                var parameter = { deptId:departmentId };
+                var a = 
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("GetClassSchedule", "ClassSchedules")',
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(parameter),
+                    dataType: "json",
+                    success: function (classScheduleList) {
+                        if (classScheduleList == "") {
+                            $("#messageLabel").text("This Department has no class schedule.");
+                        }
+                        else {
+                            $.each(classScheduleList, function (key, value) {
+                                
+                                $("#ClassScheduleTable").append('<tr>' +
+                                    '<td>' + value.Course.Code + '</td>' +
+                                    '<td>' + value.Course.Name + '</td>' +
+                                    '<td>' + 'R. No: ' + value.Room.Number + ',  ' + value.Day + ',  ' + value.StartTime + ' - ' + value.EndTime + '</td>' +
+                                    '</tr>'
+                                );
+                            });
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+
+}
