@@ -17,40 +17,36 @@ namespace UCRMS.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: ClassSchedules
-        public async Task<ActionResult> Index()
-        {
-            var classSchedules = db.ClassSchedules.Include(c => c.Course).Include(c => c.Department).Include(c => c.Room);
-            return View(await classSchedules.ToListAsync());
-        }
+        //public async Task<ActionResult> Index()
+        //{
+        //    var classSchedules = db.ClassSchedules.Include(c => c.Course).Include(c => c.Department).Include(c => c.Room);
+        //    return View(await classSchedules.ToListAsync());
+        //}
 
 
         // GET: ClassSchedules/Details/5
-        public async Task<ActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            ClassSchedule classSchedule = await db.ClassSchedules.FindAsync(id);
-            if (classSchedule == null)
-            {
-                return HttpNotFound();
-            }
-            return View(classSchedule);
-        }
+        //public async Task<ActionResult> Details(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    ClassSchedule classSchedule = await db.ClassSchedules.FindAsync(id);
+        //    if (classSchedule == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(classSchedule);
+        //}
 
         // GET: ClassSchedules/Create
         public ActionResult Create()
         {
-            //ViewBag.CourseId = new SelectList(db.Courses, "Id", "Code");
             ViewBag.DepartmentId = new SelectList(db.Departments, "Id", "Code");
             ViewBag.RoomId = new SelectList(db.Rooms, "Id", "Number");
             return View();
         }
 
-        // POST: ClassSchedules/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "Id,DepartmentId,CourseId,RoomId,Day,StartTime,EndTime")] ClassSchedule classSchedule)
@@ -111,68 +107,83 @@ namespace UCRMS.Controllers
             return Json(classSchedules, JsonRequestBehavior.AllowGet);
         }
 
-        // GET: ClassSchedules/Edit/5
-        public async Task<ActionResult> Edit(int? id)
+        public ActionResult UnAllocateAllClassrooms()
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            ClassSchedule classSchedule = await db.ClassSchedules.FindAsync(id);
-            if (classSchedule == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.CourseId = new SelectList(db.Courses, "Id", "Code", classSchedule.CourseId);
-            ViewBag.DepartmentId = new SelectList(db.Departments, "Id", "Code", classSchedule.DepartmentId);
-            ViewBag.RoomId = new SelectList(db.Rooms, "Id", "Number", classSchedule.RoomId);
-            return View(classSchedule);
+            return View();
         }
+
+        [HttpPost]
+        public async Task<ActionResult> UnAllocateAllClassrooms(string status)
+        {
+            var allData = await db.ClassSchedules.ToListAsync();
+            db.ClassSchedules.RemoveRange(allData);
+            await db.SaveChangesAsync();
+            FlashMessage.Confirmation("Unallocation of all classrooms is successfull!");
+            return RedirectToAction("UnAllocateAllClassrooms");
+        }
+
+        // GET: ClassSchedules/Edit/5
+        //public async Task<ActionResult> Edit(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    ClassSchedule classSchedule = await db.ClassSchedules.FindAsync(id);
+        //    if (classSchedule == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    ViewBag.CourseId = new SelectList(db.Courses, "Id", "Code", classSchedule.CourseId);
+        //    ViewBag.DepartmentId = new SelectList(db.Departments, "Id", "Code", classSchedule.DepartmentId);
+        //    ViewBag.RoomId = new SelectList(db.Rooms, "Id", "Number", classSchedule.RoomId);
+        //    return View(classSchedule);
+        //}
 
         // POST: ClassSchedules/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,DepartmentId,CourseId,RoomId,Day,StartTime,EndTime")] ClassSchedule classSchedule)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(classSchedule).State = EntityState.Modified;
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
-            }
-            ViewBag.CourseId = new SelectList(db.Courses, "Id", "Code", classSchedule.CourseId);
-            ViewBag.DepartmentId = new SelectList(db.Departments, "Id", "Code", classSchedule.DepartmentId);
-            ViewBag.RoomId = new SelectList(db.Rooms, "Id", "Number", classSchedule.RoomId);
-            return View(classSchedule);
-        }
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<ActionResult> Edit([Bind(Include = "Id,DepartmentId,CourseId,RoomId,Day,StartTime,EndTime")] ClassSchedule classSchedule)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        db.Entry(classSchedule).State = EntityState.Modified;
+        //        await db.SaveChangesAsync();
+        //        return RedirectToAction("Index");
+        //    }
+        //    ViewBag.CourseId = new SelectList(db.Courses, "Id", "Code", classSchedule.CourseId);
+        //    ViewBag.DepartmentId = new SelectList(db.Departments, "Id", "Code", classSchedule.DepartmentId);
+        //    ViewBag.RoomId = new SelectList(db.Rooms, "Id", "Number", classSchedule.RoomId);
+        //    return View(classSchedule);
+        //}
 
         // GET: ClassSchedules/Delete/5
-        public async Task<ActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            ClassSchedule classSchedule = await db.ClassSchedules.FindAsync(id);
-            if (classSchedule == null)
-            {
-                return HttpNotFound();
-            }
-            return View(classSchedule);
-        }
+        //public async Task<ActionResult> Delete(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    ClassSchedule classSchedule = await db.ClassSchedules.FindAsync(id);
+        //    if (classSchedule == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(classSchedule);
+        //}
 
         // POST: ClassSchedules/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(int id)
-        {
-            ClassSchedule classSchedule = await db.ClassSchedules.FindAsync(id);
-            db.ClassSchedules.Remove(classSchedule);
-            await db.SaveChangesAsync();
-            return RedirectToAction("Index");
-        }
+        //[HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
+        //public async Task<ActionResult> DeleteConfirmed(int id)
+        //{
+        //    ClassSchedule classSchedule = await db.ClassSchedules.FindAsync(id);
+        //    db.ClassSchedules.Remove(classSchedule);
+        //    await db.SaveChangesAsync();
+        //    return RedirectToAction("Index");
+        //}
 
         protected override void Dispose(bool disposing)
         {

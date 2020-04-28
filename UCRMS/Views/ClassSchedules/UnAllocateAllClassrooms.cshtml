@@ -1,12 +1,12 @@
-﻿@model UCRMS.Models.Course
+﻿@model UCRMS.Models.ClassSchedule
 @using Vereyon.Web;
 
 @{
-    ViewBag.Title = "Unassign All Courses";
+    ViewBag.Title = "Unallocate All Classrooms";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2 class="text-center">Unassign All Courses</h2>
+<h2 class="text-center">Unallocate All Classrooms</h2>
 <hr />
 @Html.RenderFlashMessages()
 
@@ -16,7 +16,7 @@
         <div class="form-horizontal col-md-offset-3">
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Unassign Courses" class="btn btn-success btn-block" id="unAssignButton" />
+                    <input type="submit" value="Unallocate Rooms" class="btn btn-success btn-block" id="unAllocateButton" />
                 </div>
             </div>
         </div>
@@ -30,8 +30,8 @@
 
     <script>
         $(document).ready(function () {
-            $("#unAssignButton").click(function () {
-                if (confirm("Are you sure to unassign all courses?")) {
+            $("#unAllocateButton").click(function () {
+                if (confirm("Are you sure to unallocate all the classrooms info?")) {
                     return true;
                 }
                 else {
