@@ -152,9 +152,47 @@ namespace UCRMS.Controllers
             return Json(course);
         }
 
-        public ActionResult UnassignAllCourses()
+        public ActionResult UnAssignAllCourses()
         {
             return View();
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> UnAssignAllCourses(string status)
+        {
+            var courses = await db.Courses.ToListAsync();
+            var teachers = await db.Teachers.ToListAsync();
+
+            if (courses == null)
+            {
+                FlashMessage.Danger("There is no course to unassign!");
+                return RedirectToAction("UnAssignAllCourses");
+            }
+            foreach (var course in courses)
+            {
+                if(course.Status == false)
+                {
+                    continue;
+                }
+                course.Status = false;
+                course.AssignTo = "Not Assigned Yet";
+                db.Courses.AddOrUpdate(course);
+                await db.SaveChangesAsync();
+            }
+
+            foreach(var teacher in teachers)
+            {
+                if(teacher.RemainingCredit == teacher.Credittobetaken)
+                {
+                    continue;
+                }
+                teacher.RemainingCredit = teacher.Credittobetaken;
+                db.Teachers.AddOrUpdate(teacher);
+                await db.SaveChangesAsync();
+            }
+
+            FlashMessage.Confirmation("Unassign all the courses is successfull!");
+            return RedirectToAction("UnAssignAllCourses");
         }
 
         // GET: Courses/Edit/5

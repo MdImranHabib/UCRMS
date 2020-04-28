@@ -34,6 +34,7 @@
                             <ul>
                                 <li>@Html.ActionLink("Save Course", "Create", "Courses")</li>
                                 <li>@Html.ActionLink("View Course Statistic", "ShowCourseStatistics", "Courses")</li>
+                                <li>@Html.ActionLink("Unassign All Courses", "UnAssignAllCourses", "Courses")</li>
                             </ul>
                         </li>
                         <li>
@@ -50,8 +51,14 @@
                                 <li>@Html.ActionLink("Enroll in Course", "Create", "CourseEnrolls")</li>
                             </ul>
                         </li>
-                        <li>@Html.ActionLink("Allocate Classroom", "Create", "ClassSchedules")</li>
-                        <li>@Html.ActionLink("View Class Schedule", "ShowClassSchedule", "ClassSchedules")</li>
+                        <li>
+                            @Html.ActionLink("Class Schedules", "Create", "ClassSchedules")
+                            <ul>
+                                <li>@Html.ActionLink("Allocate Classroom", "Create", "ClassSchedules")</li>
+                                <li>@Html.ActionLink("View Class Schedule", "ShowClassSchedule", "ClassSchedules")</li>
+                                <li>@Html.ActionLink("Unallocate All Classrooms", "UnAllocateAllClassrooms", "ClassSchedules")</li>
+                            </ul>
+                        </li>
                         <li>
                             @Html.ActionLink("Result", "Create", "Results")
                             <ul>

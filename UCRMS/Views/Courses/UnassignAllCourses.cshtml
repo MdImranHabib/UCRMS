@@ -1,10 +1,43 @@
-﻿
+﻿@model UCRMS.Models.Course
+@using Vereyon.Web;
+
 @{
     ViewBag.Title = "UnassignAllCourses";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2 class="text-center">Unassign All Courses</h2>
+<hr />
+@Html.RenderFlashMessages()
 
+<div class="well">
+    @using (Html.BeginForm())
+    {
+        <div class="form-horizontal col-md-offset-3">
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Unassign Courses" class="btn btn-success btn-block" id="unAssignButton" />
+                </div>
+            </div>
+        </div>
+    }
+</div>
 
+@section Scripts {
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
 
+    <script>
+        $(document).ready(function () {
+            $("#unAssignButton").click(function () {
+                if (confirm("Are you sure to unassign all courses?")) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            });
+        });
+    </script>
+}
