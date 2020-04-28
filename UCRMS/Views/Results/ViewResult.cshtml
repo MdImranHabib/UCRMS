@@ -1,0 +1,201 @@
+﻿@model UCRMS.Models.Result
+
+@{
+    ViewBag.Title = "View Result";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-center">View Result</h2>
+<hr />
+
+<div class="well">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal col-md-offset-3">
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.StudentId, "Student Reg. No.", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("StudentId", null, "-- Select Student --", htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.StudentId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2">Name</label>
+                <div class="col-md-10">
+                    <input type="text" readonly class="form-control" id="name" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2">Email</label>
+                <div class="col-md-10">
+                    <input type="email" readonly class="form-control" id="email" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2">Department</label>
+                <div class="col-md-10">
+                    <input type="text" readonly class="form-control" id="department" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    @*<input type="submit" value="Make PDF" class="btn btn-success" id="pbtn" />*@
+                    <button id="pbtn" class="btn btn-success" onclick="printdiv('print');">Make PDF</button>
+                </div>
+            </div>
+        </div>
+    }
+    <br />
+    <span id="msg" class="col-md-offset-5 text-danger text-center"></span>
+    <br />
+    <br />
+
+    <table class="table table-bordered text-center">
+        <thead>
+            <tr class="bg-primary">
+                <th class="text-center">
+                    Course Code
+                </th>
+                <th class="text-center">
+                    Name
+                </th>
+                <th class="text-center">
+                    Grade
+                </th>
+            </tr>
+        </thead>
+        <tbody class="bg-info" id="resultTable">
+
+        </tbody>
+    </table>
+</div>
+
+
+<div class="hide" id="print">
+    <h2 class="text-center">University Course and Result Management System</h2>
+    <hr />
+    <h4 class="text-center">Result Sheet</h4>
+    <br />
+    <br />
+    <br />
+    <table id="studentTable">
+
+    </table>
+    <hr />
+    <table class="table table-bordered text-center">
+        <thead>
+            <tr>
+                <th class="text-center">
+                    Course Code
+                </th>
+                <th class="text-center">
+                    Name
+                </th>
+                <th class="text-center">
+                    Grade
+                </th>
+            </tr>
+        </thead>
+        <tbody id="resultTable2"></tbody>
+    </table>
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <p>----------------------------------------</p>
+    <p>Authorize Signature & Date</p>
+</div>
+
+
+@section Scripts {
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#StudentId").change(function () {
+
+                $("#name").empty();
+                $("#email").empty();
+                $("#department").empty();
+                $("#msg").empty();
+                $("#resultTable").empty();
+                $("#resultTable2").empty();
+                $("#studentTable").empty();
+                var studentId = $("#StudentId").val();
+                var parameter = { stuId: studentId };
+                $("#StudentId").append('<option value=0>-- Select Student --</option>');
+
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("GetStudentById", "CourseEnrolls")',
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(parameter),
+                    success: function (student) {
+                        $("#name").val(student.Name); 
+                        $("#email").val(student.Email);
+                        $("#department").val(student.Department.Code);
+                        $("#studentTable").append(
+                            '<tr><th>Student Name: </th><td>' + student.Name + '</td></tr>' +
+                            '<tr><th>Registration No: </th><td>' + student.RegNo + '</td></tr>' +
+                            '<tr><th>Email: </th><td>' + student.Email + '</td></tr>' +
+                            '<tr><th>Department: </th><td>' + student.Department.Name + '</td></tr>'
+                        );
+                    }
+                });
+
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("GetResultsByStudentId", "Results")',
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(parameter),
+                    success: function(resultList) {
+                        if (resultList == "") {
+                            $("#msg").text("This student didn't enroll in any course.");
+                        }
+                        else {
+                            $.each(resultList, function (key, value) {
+
+                                $("#resultTable").append('<tr>' +
+                                    '<td>' + value.CourseCode + '</td>' +
+                                    '<td>' + value.CourseName + '</td>' +
+                                    '<td>' + value.Grade + '</td>' +
+                                    '</tr>'
+                                );
+
+                                $("#resultTable2").append('<tr>' +
+                                    '<td>' + value.CourseCode + '</td>' +
+                                    '<td>' + value.CourseName + '</td>' +
+                                    '<td>' + value.Grade + '</td>' +
+                                    '</tr>'
+                                );
+                            });
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+
+    <script language="javascript">
+        function printdiv(printpage) {
+            var newstr = document.all.item(printpage).innerHTML;
+            var oldstr = document.body.innerHTML;
+            document.body.innerHTML = newstr;
+            window.print();
+            document.body.innerHTML = oldstr;
+            return false;
+        }
+    </script>
+}

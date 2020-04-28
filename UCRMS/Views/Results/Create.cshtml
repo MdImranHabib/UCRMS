@@ -107,7 +107,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: '@Url.Action("GetCoursesByStudentId", "Results")',
+                    url: '@Url.Action("GetEnrolledCoursesByStudentId", "Results")',
                     contentType: "application/json; charset=utf-8",
                     data: JSON.stringify(parameter),
                     success: function(courseList) {

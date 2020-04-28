@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using UCRMS.Models;
 using Vereyon.Web;
+using UCRMS.Models.ViewModels;
 
 namespace UCRMS.Controllers
 {
@@ -72,10 +73,50 @@ namespace UCRMS.Controllers
             return View(result);
         }
 
-        public JsonResult GetCoursesByStudentId(int stuId)
+        public JsonResult GetEnrolledCoursesByStudentId(int stuId)
         {
             var enrolledCourses = db.CourseEnrolls.Where(e => e.StudentId == stuId).ToList();
             return Json(enrolledCourses, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult ViewResult()
+        {
+            ViewBag.GradeId = new SelectList(db.Grades, "Id", "Name");
+            ViewBag.StudentId = new SelectList(db.Students, "Id", "RegNo");
+            return View();
+        }
+
+        public JsonResult GetResultsByStudentId(int stuId)
+        {
+            var resultList = new List<ResultViewModel>();
+            
+            var enrolledCourses = db.CourseEnrolls.Where(e => e.StudentId == stuId).ToList();
+            var results = db.Results.Where(r => r.StudentId == stuId).ToList();
+
+            if(enrolledCourses != null)
+            {
+                foreach (var enrolledCourse in enrolledCourses)
+                {
+                    var result = new ResultViewModel();
+                    foreach (var item in results)
+                    {
+                        result.CourseCode = enrolledCourse.Course.Code;
+                        result.CourseName = enrolledCourse.Course.Name;
+
+                        if (item.CourseId == enrolledCourse.CourseId)
+                        {
+                            result.Grade = item.Grade.Name;
+                            break;
+                        }
+                        else
+                        {
+                            result.Grade = "Not Graded Yet";
+                        }
+                    }
+                    resultList.Add(result);
+                }
+            }          
+            return Json(resultList, JsonRequestBehavior.AllowGet);
         }
 
         // GET: Results/Edit/5
