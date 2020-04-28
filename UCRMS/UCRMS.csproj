@@ -360,6 +360,8 @@
     <Content Include="Views\Results\Edit.cshtml" />
     <Content Include="Views\Results\Index.cshtml" />
     <Content Include="Views\Results\ViewResult.cshtml" />
+    <Content Include="Views\Courses\AssignCourse.cshtml" />
+    <Content Include="Views\Courses\UnassignAllCourses.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

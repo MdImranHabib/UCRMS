@@ -9,6 +9,8 @@ using System.Web;
 using System.Web.Mvc;
 using UCRMS.Models;
 using Vereyon.Web;
+using System.Data.Entity.Migrations;
+using UCRMS.Models.ViewModels;
 
 namespace UCRMS.Controllers
 {
@@ -84,6 +86,75 @@ namespace UCRMS.Controllers
             ViewBag.DepartmentId = new SelectList(db.Departments, "Id", "Code", course.DepartmentId);
             ViewBag.SemesterId = new SelectList(db.Semesters, "Id", "Name", course.SemesterId);
             return View(course);
+        }
+
+        public ActionResult AssignCourse()
+        {
+            ViewBag.Departments = new SelectList(db.Departments, "Id", "Code");
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> AssignCourse([Bind(Include = "Id,DepartmentId,TeacherId,Credittobetaken,RemainingCredit,CourseId,CourseName,CourseCredit")] CourseAssignViewModel courseAssignViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var teacher = db.Teachers.FirstOrDefault(x => x.Id == courseAssignViewModel.TeacherId);
+                var course = db.Courses.FirstOrDefault(x => x.Id == courseAssignViewModel.CourseId);
+
+                if (course.Status == true)
+                {
+                    FlashMessage.Danger("This Course already has been Assigned");
+                }
+                else
+                {                   
+                    teacher.RemainingCredit = teacher.RemainingCredit - course.Credit;
+                    db.Teachers.AddOrUpdate(teacher);
+                    await db.SaveChangesAsync();
+
+                    course.Status = true;
+                    course.AssignTo = teacher.Name;
+                    db.Courses.AddOrUpdate(course);
+                    await db.SaveChangesAsync();
+
+                    FlashMessage.Confirmation("The Course " + course.Name + " Successfully Assigned to " + teacher.Name);
+                }
+
+                return RedirectToAction("AssignCourse");
+            }
+
+            ViewBag.Departments = new SelectList(db.Departments, "Id", "Code");
+            return View(courseAssignViewModel);
+        }
+
+        public JsonResult GetTeachersByDeptId(int deptId)
+        {
+            var teachers = db.Teachers.Where(x => x.DepartmentId == deptId).ToList();
+            return Json(teachers);
+        }
+
+        public JsonResult GetCoursesByDeptId(int deptId)
+        {
+            var courses = db.Courses.Where(x => x.DepartmentId == deptId).ToList();
+            return Json(courses);
+        }
+
+        public JsonResult GetTeachersById(int id)
+        {
+            var teacher = db.Teachers.Where(x => x.Id == id).FirstOrDefault();
+            return Json(teacher);
+        }
+
+        public JsonResult GetCoursesById(int id)
+        {
+            var course = db.Courses.Where(x => x.Id == id).FirstOrDefault();
+            return Json(course);
+        }
+
+        public ActionResult UnassignAllCourses()
+        {
+            return View();
         }
 
         // GET: Courses/Edit/5
