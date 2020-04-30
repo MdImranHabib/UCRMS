@@ -16,11 +16,11 @@ namespace UCRMS.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        public async Task<ActionResult> Index()
-        {
-            var students = db.Students.Include(s => s.Department);
-            return View(await students.ToListAsync());
-        }
+        //public async Task<ActionResult> Index()
+        //{
+        //    var students = db.Students.Include(s => s.Department);
+        //    return View(await students.ToListAsync());
+        //}
 
         //public async Task<ActionResult> Details(int? id)
         //{
@@ -36,10 +36,12 @@ namespace UCRMS.Controllers
         //    return View(student);
         //}
 
+
         public JsonResult IsEmailExist (string Email)
         {
             return Json(!db.Students.Any(x => x.Email.ToUpper() == Email.ToUpper()), JsonRequestBehavior.AllowGet);
         }
+
 
         public ActionResult Create()
         {
@@ -57,13 +59,13 @@ namespace UCRMS.Controllers
                 student.RegNo = GetRegNo(student);
                 db.Students.Add(student);
                 await db.SaveChangesAsync();
-                //FlashMessage.Confirmation("Registration Successfull. Your Registration number is: " + student.RegNo);
                 return View("Details",student);
             }
 
             ViewBag.DepartmentId = new SelectList(db.Departments, "Id", "Code", student.DepartmentId);
             return View(student);
         }
+
 
         public string GetRegNo(Student student)
         {
@@ -81,6 +83,7 @@ namespace UCRMS.Controllers
             string studentRegNo = department.Code + "-" + student.Date.Year + "-" + leadingZero + studentCount;
             return studentRegNo;
         }
+
 
         // GET: Students/Edit/5
         //public async Task<ActionResult> Edit(int? id)
