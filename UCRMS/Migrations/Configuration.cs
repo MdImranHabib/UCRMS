@@ -53,15 +53,6 @@ namespace UCRMS.Migrations
             //  new Grade() { Name = "F" }
             //  );
 
-            //context.Days.AddOrUpdate(
-            //    new Day() { Name = "Saturday" },
-            //    new Day() { Name = "Sunday" },
-            //    new Day() { Name = "Monday" },
-            //    new Day() { Name = "Tuesday" },
-            //    new Day() { Name = "Wednesday" },
-            //    new Day() { Name = "Thursday" }
-            //    );
-
             //context.Rooms.AddOrUpdate(
             //    new Room() { Number = "101" },
             //    new Room() { Number = "102" },
