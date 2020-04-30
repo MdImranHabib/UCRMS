@@ -46,21 +46,25 @@ namespace UCRMS.Controllers
             return View();
         }
 
+
         public JsonResult GetCourseStatistics(int deptId)
         {
             var courses = db.Courses.Where(x => x.DepartmentId == deptId).ToList();
             return Json(courses, JsonRequestBehavior.AllowGet);
         }
 
+
         public JsonResult IsCodeExist(string Code)
         {
             return Json(!db.Courses.Any(x => x.Code.Trim().ToUpper() == Code.Trim().ToUpper()), JsonRequestBehavior.AllowGet);
         }
 
+
         public JsonResult IsNameExist(string Name)
         {
             return Json(!db.Courses.Any(x => x.Name.Trim().ToUpper() == Name.Trim().ToUpper()), JsonRequestBehavior.AllowGet);
         }
+
 
         public ActionResult Create()
         {
@@ -87,6 +91,7 @@ namespace UCRMS.Controllers
             ViewBag.SemesterId = new SelectList(db.Semesters, "Id", "Name", course.SemesterId);
             return View(course);
         }
+
 
         public ActionResult AssignCourse()
         {
@@ -128,11 +133,13 @@ namespace UCRMS.Controllers
             return View(courseAssignViewModel);
         }
 
+
         public JsonResult GetTeachersByDeptId(int deptId)
         {
             var teachers = db.Teachers.Where(x => x.DepartmentId == deptId).ToList();
             return Json(teachers);
         }
+
 
         public JsonResult GetCoursesByDeptId(int deptId)
         {
@@ -140,17 +147,20 @@ namespace UCRMS.Controllers
             return Json(courses);
         }
 
+
         public JsonResult GetTeachersById(int id)
         {
             var teacher = db.Teachers.Where(x => x.Id == id).FirstOrDefault();
             return Json(teacher);
         }
 
+
         public JsonResult GetCoursesById(int id)
         {
             var course = db.Courses.Where(x => x.Id == id).FirstOrDefault();
             return Json(course);
         }
+
 
         public ActionResult UnAssignAllCourses()
         {
