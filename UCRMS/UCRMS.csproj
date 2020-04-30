@@ -349,10 +349,6 @@
     <Content Include="Views\CourseEnrolls\Edit.cshtml" />
     <Content Include="Views\CourseEnrolls\Index.cshtml" />
     <Content Include="Views\ClassSchedules\Create.cshtml" />
-    <Content Include="Views\ClassSchedules\Delete.cshtml" />
-    <Content Include="Views\ClassSchedules\Details.cshtml" />
-    <Content Include="Views\ClassSchedules\Edit.cshtml" />
-    <Content Include="Views\ClassSchedules\Index.cshtml" />
     <Content Include="Views\ClassSchedules\ShowClassSchedule.cshtml" />
     <Content Include="Views\Results\Create.cshtml" />
     <Content Include="Views\Results\Delete.cshtml" />

@@ -40,6 +40,7 @@ namespace UCRMS.Controllers
         //}
 
         // GET: ClassSchedules/Create
+
         public ActionResult Create()
         {
             ViewBag.DepartmentId = new SelectList(db.Departments, "Id", "Code");
@@ -92,11 +93,13 @@ namespace UCRMS.Controllers
             return View(classSchedule);
         }
 
+
         public ActionResult ShowClassSchedule()
         {
             ViewBag.Departments = new SelectList(db.Departments, "Id", "Code");
             return View();
         }
+
 
         public JsonResult GetClassSchedule(int deptId)
         {
@@ -106,6 +109,7 @@ namespace UCRMS.Controllers
                 .Where(c => c.DepartmentId == deptId).ToList();
             return Json(classSchedules, JsonRequestBehavior.AllowGet);
         }
+
 
         public ActionResult UnAllocateAllClassrooms()
         {
