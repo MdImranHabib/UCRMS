@@ -340,10 +340,6 @@
     <Content Include="Views\ClassSchedules\Create.cshtml" />
     <Content Include="Views\ClassSchedules\ShowClassSchedule.cshtml" />
     <Content Include="Views\Results\Create.cshtml" />
-    <Content Include="Views\Results\Delete.cshtml" />
-    <Content Include="Views\Results\Details.cshtml" />
-    <Content Include="Views\Results\Edit.cshtml" />
-    <Content Include="Views\Results\Index.cshtml" />
     <Content Include="Views\Results\ViewResult.cshtml" />
     <Content Include="Views\Courses\AssignCourse.cshtml" />
     <Content Include="Views\Courses\UnAssignAllCourses.cshtml" />
