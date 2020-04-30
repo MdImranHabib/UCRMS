@@ -42,10 +42,12 @@ namespace UCRMS.Controllers
             return Json(!db.Departments.Any(x => x.Code.ToUpper() == Code.ToUpper()), JsonRequestBehavior.AllowGet);
         }
 
+
         public JsonResult IsNameExist(string Name)
         {
             return Json(!db.Departments.Any(x => x.Name.Trim().ToUpper() == Name.Trim().ToUpper()), JsonRequestBehavior.AllowGet);
         }
+
 
         // GET: Departments/Create
         public ActionResult Create()

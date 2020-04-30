@@ -318,9 +318,6 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Departments\Create.cshtml" />
-    <Content Include="Views\Departments\Delete.cshtml" />
-    <Content Include="Views\Departments\Details.cshtml" />
-    <Content Include="Views\Departments\Edit.cshtml" />
     <Content Include="Views\Departments\Index.cshtml" />
     <Content Include="Views\Courses\Create.cshtml" />
     <Content Include="Views\Teachers\Create.cshtml" />
