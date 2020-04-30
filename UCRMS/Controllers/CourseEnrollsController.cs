@@ -73,11 +73,13 @@ namespace UCRMS.Controllers
             return View(courseEnroll);
         }
 
+
         public JsonResult GetStudentById(int stuId)
         {
             var student = db.Students.Include(s => s.Department).FirstOrDefault(s => s.Id == stuId);
             return Json(student, JsonRequestBehavior.AllowGet);
         }
+
 
         public JsonResult GetCoursesByStudentId(int stuId)
         {
@@ -85,6 +87,7 @@ namespace UCRMS.Controllers
             var courses = db.Courses.Where(c => c.DepartmentId == student.DepartmentId).ToList();
             return Json(courses, JsonRequestBehavior.AllowGet);
         }
+
 
         public JsonResult IsStudentEnrolled(int stuId, int courseId)
         {
@@ -98,65 +101,65 @@ namespace UCRMS.Controllers
         }
 
         // GET: CourseEnrolls/Edit/5
-        public async Task<ActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            CourseEnroll courseEnroll = await db.CourseEnrolls.FindAsync(id);
-            if (courseEnroll == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.CourseId = new SelectList(db.Courses, "Id", "Code", courseEnroll.CourseId);
-            ViewBag.StudentId = new SelectList(db.Students, "Id", "RegNo", courseEnroll.StudentId);
-            return View(courseEnroll);
-        }
+        //public async Task<ActionResult> Edit(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    CourseEnroll courseEnroll = await db.CourseEnrolls.FindAsync(id);
+        //    if (courseEnroll == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    ViewBag.CourseId = new SelectList(db.Courses, "Id", "Code", courseEnroll.CourseId);
+        //    ViewBag.StudentId = new SelectList(db.Students, "Id", "RegNo", courseEnroll.StudentId);
+        //    return View(courseEnroll);
+        //}
 
-        // POST: CourseEnrolls/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,StudentId,CourseId,EnrollDate")] CourseEnroll courseEnroll)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(courseEnroll).State = EntityState.Modified;
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
-            }
-            ViewBag.CourseId = new SelectList(db.Courses, "Id", "Code", courseEnroll.CourseId);
-            ViewBag.StudentId = new SelectList(db.Students, "Id", "RegNo", courseEnroll.StudentId);
-            return View(courseEnroll);
-        }
+        //// POST: CourseEnrolls/Edit/5
+        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        //// more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<ActionResult> Edit([Bind(Include = "Id,StudentId,CourseId,EnrollDate")] CourseEnroll courseEnroll)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        db.Entry(courseEnroll).State = EntityState.Modified;
+        //        await db.SaveChangesAsync();
+        //        return RedirectToAction("Index");
+        //    }
+        //    ViewBag.CourseId = new SelectList(db.Courses, "Id", "Code", courseEnroll.CourseId);
+        //    ViewBag.StudentId = new SelectList(db.Students, "Id", "RegNo", courseEnroll.StudentId);
+        //    return View(courseEnroll);
+        //}
 
-        // GET: CourseEnrolls/Delete/5
-        public async Task<ActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            CourseEnroll courseEnroll = await db.CourseEnrolls.FindAsync(id);
-            if (courseEnroll == null)
-            {
-                return HttpNotFound();
-            }
-            return View(courseEnroll);
-        }
+        //// GET: CourseEnrolls/Delete/5
+        //public async Task<ActionResult> Delete(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    CourseEnroll courseEnroll = await db.CourseEnrolls.FindAsync(id);
+        //    if (courseEnroll == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(courseEnroll);
+        //}
 
-        // POST: CourseEnrolls/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(int id)
-        {
-            CourseEnroll courseEnroll = await db.CourseEnrolls.FindAsync(id);
-            db.CourseEnrolls.Remove(courseEnroll);
-            await db.SaveChangesAsync();
-            return RedirectToAction("Index");
-        }
+        //// POST: CourseEnrolls/Delete/5
+        //[HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
+        //public async Task<ActionResult> DeleteConfirmed(int id)
+        //{
+        //    CourseEnroll courseEnroll = await db.CourseEnrolls.FindAsync(id);
+        //    db.CourseEnrolls.Remove(courseEnroll);
+        //    await db.SaveChangesAsync();
+        //    return RedirectToAction("Index");
+        //}
 
         protected override void Dispose(bool disposing)
         {
