@@ -42,6 +42,7 @@ namespace UCRMS.Controllers
             return Json(!db.Teachers.Any(x => x.Email.ToUpper() == Email.ToUpper()), JsonRequestBehavior.AllowGet);
         }
 
+
         public ActionResult Create()
         {
             ViewBag.DepartmentId = new SelectList(db.Departments, "Id", "Code");
